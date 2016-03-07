@@ -8,12 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		CF61BDBC1C8D9F8E00CBA055 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */; };
-		CF61BDBE1C8D9F8E00CBA055 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDBD1C8D9F8E00CBA055 /* ViewController.swift */; };
+		CF61BDBE1C8D9F8E00CBA055 /* PyramidViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */; };
 		CF61BDC11C8D9F8E00CBA055 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF61BDBF1C8D9F8E00CBA055 /* Main.storyboard */; };
-		CF61BDC31C8D9F8E00CBA055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF61BDC21C8D9F8E00CBA055 /* Assets.xcassets */; };
 		CF61BDC61C8D9F8E00CBA055 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF61BDC41C8D9F8E00CBA055 /* LaunchScreen.storyboard */; };
 		CF61BDD11C8D9F8E00CBA055 /* PyramidGameImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDD01C8D9F8E00CBA055 /* PyramidGameImplTests.swift */; };
 		CF61BDDC1C8D9F8E00CBA055 /* PyramidGameImplUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDDB1C8D9F8E00CBA055 /* PyramidGameImplUITests.swift */; };
+		CF61BDEA1C8D9FB700CBA055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF61BDE91C8D9FB700CBA055 /* Assets.xcassets */; };
+		CF61BDEC1C8DA03A00CBA055 /* PyramidGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDEB1C8DA03A00CBA055 /* PyramidGame.swift */; };
+		CF61BE161C8DA24C00CBA055 /* BufferAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE091C8DA24C00CBA055 /* BufferAction.swift */; };
+		CF61BE171C8DA24C00CBA055 /* BufferCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE0A1C8DA24C00CBA055 /* BufferCondition.swift */; };
+		CF61BE181C8DA24C00CBA055 /* Chunk.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE0B1C8DA24C00CBA055 /* Chunk.swift */; };
+		CF61BE191C8DA24C00CBA055 /* Declarative.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE0C1C8DA24C00CBA055 /* Declarative.swift */; };
+		CF61BE1A1C8DA24C00CBA055 /* Instantiation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE0D1C8DA24C00CBA055 /* Instantiation.swift */; };
+		CF61BE1B1C8DA24C00CBA055 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE0E1C8DA24C00CBA055 /* Model.swift */; };
+		CF61BE1C1C8DA24C00CBA055 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE0F1C8DA24C00CBA055 /* Parser.swift */; };
+		CF61BE1D1C8DA24C00CBA055 /* Procedural.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE101C8DA24C00CBA055 /* Procedural.swift */; };
+		CF61BE1E1C8DA24C00CBA055 /* Production.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE111C8DA24C00CBA055 /* Production.swift */; };
+		CF61BE1F1C8DA24C00CBA055 /* SlotAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE121C8DA24C00CBA055 /* SlotAction.swift */; };
+		CF61BE201C8DA24C00CBA055 /* SlotCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE131C8DA24C00CBA055 /* SlotCondition.swift */; };
+		CF61BE211C8DA24C00CBA055 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE141C8DA24C00CBA055 /* Support.swift */; };
+		CF61BE221C8DA24C00CBA055 /* Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE151C8DA24C00CBA055 /* Tokenizer.swift */; };
+		CF61BE241C8DC67300CBA055 /* PyramidModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE231C8DC67300CBA055 /* PyramidModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,9 +51,8 @@
 /* Begin PBXFileReference section */
 		CF61BDB81C8D9F8E00CBA055 /* PyramidGameImpl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PyramidGameImpl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CF61BDBD1C8D9F8E00CBA055 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyramidViewController.swift; sourceTree = "<group>"; };
 		CF61BDC01C8D9F8E00CBA055 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		CF61BDC21C8D9F8E00CBA055 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF61BDC51C8D9F8E00CBA055 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF61BDC71C8D9F8E00CBA055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF61BDCC1C8D9F8E00CBA055 /* PyramidGameImplTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PyramidGameImplTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +61,22 @@
 		CF61BDD71C8D9F8E00CBA055 /* PyramidGameImplUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PyramidGameImplUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF61BDDB1C8D9F8E00CBA055 /* PyramidGameImplUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyramidGameImplUITests.swift; sourceTree = "<group>"; };
 		CF61BDDD1C8D9F8E00CBA055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF61BDE91C8D9FB700CBA055 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CF61BDEB1C8DA03A00CBA055 /* PyramidGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyramidGame.swift; sourceTree = "<group>"; };
+		CF61BE091C8DA24C00CBA055 /* BufferAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferAction.swift; path = "Act-R/BufferAction.swift"; sourceTree = "<group>"; };
+		CF61BE0A1C8DA24C00CBA055 /* BufferCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferCondition.swift; path = "Act-R/BufferCondition.swift"; sourceTree = "<group>"; };
+		CF61BE0B1C8DA24C00CBA055 /* Chunk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Chunk.swift; path = "Act-R/Chunk.swift"; sourceTree = "<group>"; };
+		CF61BE0C1C8DA24C00CBA055 /* Declarative.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Declarative.swift; path = "Act-R/Declarative.swift"; sourceTree = "<group>"; };
+		CF61BE0D1C8DA24C00CBA055 /* Instantiation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Instantiation.swift; path = "Act-R/Instantiation.swift"; sourceTree = "<group>"; };
+		CF61BE0E1C8DA24C00CBA055 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Model.swift; path = "Act-R/Model.swift"; sourceTree = "<group>"; };
+		CF61BE0F1C8DA24C00CBA055 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parser.swift; path = "Act-R/Parser.swift"; sourceTree = "<group>"; };
+		CF61BE101C8DA24C00CBA055 /* Procedural.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Procedural.swift; path = "Act-R/Procedural.swift"; sourceTree = "<group>"; };
+		CF61BE111C8DA24C00CBA055 /* Production.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Production.swift; path = "Act-R/Production.swift"; sourceTree = "<group>"; };
+		CF61BE121C8DA24C00CBA055 /* SlotAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SlotAction.swift; path = "Act-R/SlotAction.swift"; sourceTree = "<group>"; };
+		CF61BE131C8DA24C00CBA055 /* SlotCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SlotCondition.swift; path = "Act-R/SlotCondition.swift"; sourceTree = "<group>"; };
+		CF61BE141C8DA24C00CBA055 /* Support.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Support.swift; path = "Act-R/Support.swift"; sourceTree = "<group>"; };
+		CF61BE151C8DA24C00CBA055 /* Tokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tokenizer.swift; path = "Act-R/Tokenizer.swift"; sourceTree = "<group>"; };
+		CF61BE231C8DC67300CBA055 /* PyramidModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyramidModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,10 +127,13 @@
 		CF61BDBA1C8D9F8E00CBA055 /* PyramidGameImpl */ = {
 			isa = PBXGroup;
 			children = (
+				CF61BE081C8DA21000CBA055 /* Act-R */,
 				CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */,
-				CF61BDBD1C8D9F8E00CBA055 /* ViewController.swift */,
+				CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */,
 				CF61BDBF1C8D9F8E00CBA055 /* Main.storyboard */,
-				CF61BDC21C8D9F8E00CBA055 /* Assets.xcassets */,
+				CF61BDE91C8D9FB700CBA055 /* Assets.xcassets */,
+				CF61BDEB1C8DA03A00CBA055 /* PyramidGame.swift */,
+				CF61BE231C8DC67300CBA055 /* PyramidModel.swift */,
 				CF61BDC41C8D9F8E00CBA055 /* LaunchScreen.storyboard */,
 				CF61BDC71C8D9F8E00CBA055 /* Info.plist */,
 			);
@@ -123,6 +156,26 @@
 				CF61BDDD1C8D9F8E00CBA055 /* Info.plist */,
 			);
 			path = PyramidGameImplUITests;
+			sourceTree = "<group>";
+		};
+		CF61BE081C8DA21000CBA055 /* Act-R */ = {
+			isa = PBXGroup;
+			children = (
+				CF61BE091C8DA24C00CBA055 /* BufferAction.swift */,
+				CF61BE0A1C8DA24C00CBA055 /* BufferCondition.swift */,
+				CF61BE0B1C8DA24C00CBA055 /* Chunk.swift */,
+				CF61BE0C1C8DA24C00CBA055 /* Declarative.swift */,
+				CF61BE0D1C8DA24C00CBA055 /* Instantiation.swift */,
+				CF61BE0E1C8DA24C00CBA055 /* Model.swift */,
+				CF61BE0F1C8DA24C00CBA055 /* Parser.swift */,
+				CF61BE101C8DA24C00CBA055 /* Procedural.swift */,
+				CF61BE111C8DA24C00CBA055 /* Production.swift */,
+				CF61BE121C8DA24C00CBA055 /* SlotAction.swift */,
+				CF61BE131C8DA24C00CBA055 /* SlotCondition.swift */,
+				CF61BE141C8DA24C00CBA055 /* Support.swift */,
+				CF61BE151C8DA24C00CBA055 /* Tokenizer.swift */,
+			);
+			name = "Act-R";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,7 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF61BDC61C8D9F8E00CBA055 /* LaunchScreen.storyboard in Resources */,
-				CF61BDC31C8D9F8E00CBA055 /* Assets.xcassets in Resources */,
+				CF61BDEA1C8D9FB700CBA055 /* Assets.xcassets in Resources */,
 				CF61BDC11C8D9F8E00CBA055 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,8 +309,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF61BDBE1C8D9F8E00CBA055 /* ViewController.swift in Sources */,
+				CF61BE1B1C8DA24C00CBA055 /* Model.swift in Sources */,
+				CF61BE1F1C8DA24C00CBA055 /* SlotAction.swift in Sources */,
+				CF61BE191C8DA24C00CBA055 /* Declarative.swift in Sources */,
+				CF61BE1E1C8DA24C00CBA055 /* Production.swift in Sources */,
+				CF61BE1C1C8DA24C00CBA055 /* Parser.swift in Sources */,
+				CF61BE221C8DA24C00CBA055 /* Tokenizer.swift in Sources */,
+				CF61BE241C8DC67300CBA055 /* PyramidModel.swift in Sources */,
+				CF61BE201C8DA24C00CBA055 /* SlotCondition.swift in Sources */,
+				CF61BE171C8DA24C00CBA055 /* BufferCondition.swift in Sources */,
+				CF61BDEC1C8DA03A00CBA055 /* PyramidGame.swift in Sources */,
+				CF61BE1A1C8DA24C00CBA055 /* Instantiation.swift in Sources */,
+				CF61BE161C8DA24C00CBA055 /* BufferAction.swift in Sources */,
+				CF61BDBE1C8D9F8E00CBA055 /* PyramidViewController.swift in Sources */,
+				CF61BE211C8DA24C00CBA055 /* Support.swift in Sources */,
+				CF61BE1D1C8DA24C00CBA055 /* Procedural.swift in Sources */,
 				CF61BDBC1C8D9F8E00CBA055 /* AppDelegate.swift in Sources */,
+				CF61BE181C8DA24C00CBA055 /* Chunk.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
