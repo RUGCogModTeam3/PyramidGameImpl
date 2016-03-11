@@ -9,43 +9,61 @@
 import UIKit
 
 enum UIState {
-    case MemorizeFirst, HumanSelect, HumanBS(ndx:Int), HumanNewCard(ndx:Int), ModelSelect, ModelBS(ndx:Int), ModelNewCard(ndx:Int);
+    case MemorizeFirst, HumanYesNo, HumanSelect, HumanBS(ndx:Int), HumanNewCard(ndx:Int), ModelSelect, ModelPass, ModelBS(ndx:Int), ModelPostBS(ndx:Int, call:Bool);
     
     func clickAB1(c:PyramidViewController) {
         switch self {
         case .MemorizeFirst:
             for i in 0..<4 {
                 c.hideHandCard(i)
+                c.lowerHandCard(i)
             }
+            c.state = .HumanYesNo
+            
+        case .HumanYesNo:
             c.state = .HumanSelect
+            
         case let .HumanBS(ndx):
             c.state = .HumanNewCard(ndx:ndx)
+            
         case let .HumanNewCard(ndx):
             c.hideHandCard(ndx)
-            c.state = .HumanSelect
+            c.lowerHandCard(ndx)
+            c.state = .ModelSelect
+            
+        case .ModelPass:
+            c.state = .HumanYesNo
+            
+        case let .ModelBS(ndx):
+            c.state = .ModelPostBS(ndx:ndx, call:true)
+            
+        case .ModelPostBS:
+            c.state = .HumanYesNo
+            
         default: break
         }
     }
     
     func clickAB2(c:PyramidViewController) {
         switch self {
-        case HumanSelect:
+        case .HumanYesNo:
             c.game.selectCard(.Left, ndx: nil)
-            c.game.selectCard(.Right, ndx: nil)
-            c.state = .HumanSelect
+            c.state = .ModelSelect
+            
+        case let .ModelBS(ndx):
+            c.state = .ModelPostBS(ndx:ndx, call:false)
+            
         default: break
         }
-    }
-    
-    func clickAB3(c:PyramidViewController) {
-        print("\(self): clickAB3")
     }
     
     func clickCard(c:PyramidViewController, ndx:Int) {
         switch self {
         case .HumanSelect:
             c.game.selectCard(.Left, ndx:ndx)
+            c.raiseHandCard(ndx)
             c.state = .HumanBS(ndx:ndx)
+            
         default: break
         }
     }
@@ -55,27 +73,33 @@ enum UIState {
         case .MemorizeFirst:
             for i in 0..<4 {
                 c.showHandCard(i)
+                c.raiseHandCard(i)
             }
-            c.setABTitles("Next", nil, nil)
-            c.tutorialText.text = "Welcome mortal! Remember your cards well..."
-        case .HumanSelect:
-            c.setABTitles("Yes (select card)", "No", nil)
+            c.setABTitles("Next", nil)
+            c.tutorialText = "Welcome mortal! Remember your cards well..."
+            
+        case .HumanYesNo:
+            c.setABTitles("Yes/Bluff", "No")
             c.game.nextTurn()
             
             let nextCard = c.game.pyramid.getLastFlippedCard()
             c.pcards.popLast()!.image = nextCard.image
-            c.tutorialText.text = "Well, human, do you have a \(nextCard.rankName)?"
+            c.tutorialText = "Well, human, do you have a \(nextCard.rankName)?"
+            
+        case .HumanSelect:
+            c.setABTitles(nil, nil)
+            c.tutorialText = "Select your card, mortal."
             
         case let .HumanBS(ndx):
             let lPreScore = c.game.players[.Left]!.score
-            let rPreScore = c.game.players[.Left]!.score
-            c.setABTitles("Next", nil, nil)
+            let rPreScore = c.game.players[.Right]!.score
+            c.setABTitles("Next", nil)
             let callBS = c.model.callBullshit()
-            c.showHandCard(ndx)
-            c.game.callBullshit(.Left, call:callBS)
             var bsText = ""
             if callBS {
                 bsText = "Show me your card! I believe you are bluffing...\n\n"
+                c.showHandCard(ndx)
+                c.game.callBullshit(.Left, call:callBS)
                 let lDiff = c.game.players[.Left]!.score - lPreScore
                 let rDiff = c.game.players[.Right]!.score - rPreScore
                 if lDiff > 0 {
@@ -85,21 +109,60 @@ enum UIState {
                 }
             } else {
                 bsText = "I trust you are not bluffing... for now. You get \(c.game.pyramid.rowValue()) points."
+                c.game.callBullshit(.Left, call:callBS)
             }
-            c.tutorialText.text = bsText
-            c.game.selectCard(.Right, ndx:nil)
+            c.tutorialText = bsText
+            
         case let .HumanNewCard(ndx):
-            c.setABTitles("Next", nil, nil)
-            c.tutorialText.text = "This is your new card, mortal. Remember it well."
+            c.setABTitles("Next", nil)
+            c.tutorialText = "This is your new card, mortal. Remember it well."
             c.showHandCard(ndx)
-        default: break
+            
+        case .ModelSelect:
+            let choice = c.model.chooseCard()
+            c.game.selectCard(.Right, ndx: choice)
+            if let ndx = choice {
+                c.state = .ModelBS(ndx:ndx)
+            } else {
+                c.state = .ModelPass
+            }
+        
+        case .ModelPass:
+            c.setABTitles("Next", nil)
+            c.tutorialText = "It is now my turn... but I don't have a \(c.game.pyramid.getLastFlippedCard().rankName)."
+            
+        case let .ModelBS(ndx):
+            c.setABTitles("Yes", "No")
+            c.tutorialText = "It is now my turn! I do have a \(c.game.pyramid.getLastFlippedCard().rankName).\n\nDo you think I am bluffing?"
+            print(ndx)
+            
+        case let .ModelPostBS(_, call):
+            let lPreScore = c.game.players[.Left]!.score
+            let rPreScore = c.game.players[.Right]!.score
+            c.game.callBullshit(.Right, call:call)
+            c.setABTitles("Next", nil)
+            var textBase = ""
+            if (call) {
+                let lDiff = c.game.players[.Left]!.score - lPreScore
+                let rDiff = c.game.players[.Right]!.score - rPreScore
+                if lDiff > 0 {
+                    textBase = "No, you caught me in my lie! You get \(lDiff) points."
+                } else {
+                    textBase = "Ha! I was telling the truth! I get \(rDiff) points."
+                }
+            } else {
+                textBase = "Very well, mortal. I get \(c.game.pyramid.rowValue()) points."
+            }
+            c.tutorialText = textBase + "\n\nNow I get a new card."
+            
+        //default: break
         }
         c.lscore.setTitle("\(c.game.players[.Left]!.score)", forState: .Normal)
         c.rscore.setTitle("\(c.game.players[.Right]!.score)", forState: .Normal)
     }
 }
 
-class PyramidViewController: UIViewController {
+class PyramidViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
     var model = PyramidModel()
     var game = PyramidGame(numRanks:13, numSuits:4, pyramidRows:4, handSize:4)
@@ -110,8 +173,7 @@ class PyramidViewController: UIViewController {
     @IBOutlet weak var card3: UIButton!
     @IBOutlet weak var actionButton1: UIButton!
     @IBOutlet weak var actionButton2: UIButton!
-    @IBOutlet weak var actionButton3: UIButton!
-    @IBOutlet weak var tutorialText: UITextView!
+    @IBOutlet weak var tutorialTextView: UITextView!
     
     @IBOutlet weak var pcard11: UIImageView!
     @IBOutlet weak var pcard12: UIImageView!
@@ -127,10 +189,25 @@ class PyramidViewController: UIViewController {
     @IBOutlet weak var lscore: UIButton!
     @IBOutlet weak var rscore: UIButton!
     
+    @IBOutlet weak var portraitButton: UIButton!
+    
+    @IBOutlet weak var card0TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var card1TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var card2TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var card3TopConstraint: NSLayoutConstraint!
+    
     var cards = [UIButton!]()
+    var cardConstraints = [NSLayoutConstraint!]()
     var pcards = [UIImageView!]()
     
-    var state = UIState.MemorizeFirst {
+    var tutorialText: String = "" {
+        didSet {
+            tutorialTextView.text = tutorialText
+            self.performSegueWithIdentifier("showDialog", sender: self)
+        }
+    }
+    
+    var state: UIState = UIState.MemorizeFirst {
         didSet {
             state.setup(self)
         }
@@ -140,11 +217,14 @@ class PyramidViewController: UIViewController {
         super.viewDidLoad()
         //model.loadModel("pyramid")
         //model.run()
-        print("here1?")
         cards.append(card0)
         cards.append(card1)
         cards.append(card2)
         cards.append(card3)
+        cardConstraints.append(card0TopConstraint)
+        cardConstraints.append(card1TopConstraint)
+        cardConstraints.append(card2TopConstraint)
+        cardConstraints.append(card3TopConstraint)
         pcards.append(pcard41)
         pcards.append(pcard32)
         pcards.append(pcard31)
@@ -158,13 +238,10 @@ class PyramidViewController: UIViewController {
         
         state = .MemorizeFirst
         
-        print("here2?")
         gameInit()
     }
     
-    func gameInit() {
-
-    }
+    func gameInit() { }
     
     func showHandCard(ndx:Int) {
         let playerCard = game.players[.Left]!.hand[ndx]
@@ -173,6 +250,14 @@ class PyramidViewController: UIViewController {
     
     func hideHandCard(ndx:Int) {
         cards[ndx].setBackgroundImage(UIImage(named:"CardBack"), forState: .Normal)
+    }
+    
+    func raiseHandCard(ndx:Int) {
+        cardConstraints[ndx].constant = 8
+    }
+    
+    func lowerHandCard(ndx:Int) {
+        cardConstraints[ndx].constant = 40
     }
     
     func getCardNdx(c:UIButton) -> Int {
@@ -184,7 +269,7 @@ class PyramidViewController: UIViewController {
         return -1
     }
     
-    func setABTitles(ab1:String?, _ ab2:String?, _ ab3:String?) {
+    func setABTitles(ab1:String?, _ ab2:String?) {
         if let ab1S = ab1 {
             actionButton1.setTitle(ab1S, forState: .Normal)
             actionButton1.hidden = false;
@@ -196,12 +281,6 @@ class PyramidViewController: UIViewController {
             actionButton2.hidden = false;
         } else {
             actionButton2.hidden = true;
-        }
-        if let ab3S = ab3 {
-            actionButton3.setTitle(ab3S, forState: .Normal)
-            actionButton3.hidden = false;
-        } else {
-            actionButton3.hidden = true;
         }
     }
     
@@ -215,8 +294,23 @@ class PyramidViewController: UIViewController {
     @IBAction func clickAB2(sender: UIButton) {
         state.clickAB2(self)
     }
-    @IBAction func clickAB3(sender: UIButton) {
-        state.clickAB3(self)
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender:sender)
+        
+        if segue.identifier == "showDialog" {
+            segue.destinationViewController.popoverPresentationController?.sourceRect = portraitButton.frame
+            if let tvc = segue.destinationViewController as? DialogViewController {
+                if let ppc = tvc.popoverPresentationController {
+                    ppc.delegate = self
+                }
+                tvc.text = tutorialText
+            }
+        }
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
     }
 }
 

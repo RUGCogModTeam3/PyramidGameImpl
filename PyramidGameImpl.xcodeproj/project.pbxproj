@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ABF55E251C9329D800E6CEE5 /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */; };
 		CF61BDBC1C8D9F8E00CBA055 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */; };
 		CF61BDBE1C8D9F8E00CBA055 /* PyramidViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */; };
 		CF61BDC11C8D9F8E00CBA055 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF61BDBF1C8D9F8E00CBA055 /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
 		CF61BDB81C8D9F8E00CBA055 /* PyramidGameImpl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PyramidGameImpl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyramidViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */,
 				CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */,
 				CF61BDBF1C8D9F8E00CBA055 /* Main.storyboard */,
+				ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */,
 				CF61BDE91C8D9FB700CBA055 /* Assets.xcassets */,
 				CF61BDEB1C8DA03A00CBA055 /* PyramidGame.swift */,
 				CF61BE231C8DC67300CBA055 /* PyramidModel.swift */,
@@ -323,6 +326,7 @@
 				CF61BE161C8DA24C00CBA055 /* BufferAction.swift in Sources */,
 				CF61BDBE1C8D9F8E00CBA055 /* PyramidViewController.swift in Sources */,
 				CF61BE211C8DA24C00CBA055 /* Support.swift in Sources */,
+				ABF55E251C9329D800E6CEE5 /* DialogViewController.swift in Sources */,
 				CF61BE1D1C8DA24C00CBA055 /* Procedural.swift in Sources */,
 				CF61BDBC1C8D9F8E00CBA055 /* AppDelegate.swift in Sources */,
 				CF61BE181C8DA24C00CBA055 /* Chunk.swift in Sources */,
@@ -552,6 +556,7 @@
 				CF61BDE21C8D9F8E00CBA055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CF61BDE31C8D9F8E00CBA055 /* Build configuration list for PBXNativeTarget "PyramidGameImplTests" */ = {
 			isa = XCConfigurationList;
@@ -560,6 +565,7 @@
 				CF61BDE51C8D9F8E00CBA055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CF61BDE61C8D9F8E00CBA055 /* Build configuration list for PBXNativeTarget "PyramidGameImplUITests" */ = {
 			isa = XCConfigurationList;
@@ -568,6 +574,7 @@
 				CF61BDE81C8D9F8E00CBA055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
