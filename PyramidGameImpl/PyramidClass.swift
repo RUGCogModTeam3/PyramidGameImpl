@@ -51,12 +51,16 @@ class PyramidClass: Model {
         }
     }
     
-    func callBullshit() -> Bool {
-        return arc4random_uniform(2) == 1
+    //func callBullshit() -> Bool {
+      //  return arc4random_uniform(2) == 1
+    //}
+    
+    func callBullshit() -> Bool{
+        return self.lastAction("decision")! == "yes"
     }
     
     func getPlay()->Int?{
-        switch(self.lastAction("play")!){
+        switch(self.lastAction("location")!){
         case ("0"):
             return 1
         case ("1"):

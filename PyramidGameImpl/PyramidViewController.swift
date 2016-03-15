@@ -100,8 +100,8 @@ enum UIState {
             let rPreScore = c.game.players[.Right]!.score
             //c.pModel.inputPlay(c.game.pyramid.getLastFlippedCard(),"userplay")
             //c.pModel.run()
-            //c.pModel.getBluff (which isn't implemented yet)
             c.setABTitles("Next", nil)
+            //let callBS = c.pModel.callBullshit()
             let callBS = c.model.callBullshit()
             var bsText = ""
             if callBS {
