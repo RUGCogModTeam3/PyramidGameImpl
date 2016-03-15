@@ -211,7 +211,7 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     var tutorialText: String = "" {
         didSet {
             tutorialTextView.text = tutorialText
-            self.performSegueWithIdentifier("showDialog", sender: self)
+            //self.performSegueWithIdentifier("showDialog", sender: self)
         }
     }
     

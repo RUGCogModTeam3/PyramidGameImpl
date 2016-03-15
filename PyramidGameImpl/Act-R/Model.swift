@@ -52,6 +52,7 @@ class Model {
     */
     func modifyLastAction(slot:String, value:String) {
         if let action = buffers["action"] {
+            print("Inside modifyLastAction")
             action.setSlot(slot, value: value)
         }
     }

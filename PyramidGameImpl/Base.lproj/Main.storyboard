@@ -550,12 +550,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyD-4b-sXT">
                                 <rect key="frame" x="20" y="20" width="560" height="130"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfT-MK-uM3">
-                                        <rect key="frame" x="156" y="0.0" width="404" height="130"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8nQ-Jo-zwI">
                                         <rect key="frame" x="103" y="0.0" width="356" height="115"/>
                                         <subviews>
@@ -642,6 +636,12 @@
                                             <constraint firstAttribute="width" secondItem="INr-KD-snY" secondAttribute="height" multiplier="74:65" id="sL2-fX-2jR"/>
                                         </constraints>
                                     </imageView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" text="TEST HERE" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfT-MK-uM3">
+                                        <rect key="frame" x="156" y="0.0" width="404" height="130"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>

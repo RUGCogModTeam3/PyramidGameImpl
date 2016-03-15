@@ -96,6 +96,7 @@ class Declarative  {
                 bestMatch = ch1
             }
         }
+        print("search:\(chunk) bestMatch:\(bestMatch)")
         if bestActivation > retrievalThreshold {
             return (latency(bestActivation) , bestMatch)
         } else {
