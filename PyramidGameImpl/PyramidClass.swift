@@ -6,7 +6,7 @@ class PyramidClass: Model {
     
     override init(){
         super.init()
-        for i in 1...13{
+        for i in 0..<13{
             let count = Chunk(s:"count",m:self)
             count.setSlot("isa", value: "cardcount")
             count.setSlot("cardrank", value: "\(i)")
@@ -31,11 +31,11 @@ class PyramidClass: Model {
         cardchunk.setSlot("isa", value: "card")
         cardchunk.setSlot("rank",value: "\(card.rank)")
         self.dm.addToDM(cardchunk)
-        cardCount[card.rank]+=1
+        cardCount[card.rank-1]+=1
         let count = Chunk(s:"count",m:self)
         count.setSlot("isa", value: "cardcount")
         count.setSlot("cardrank", value: "\(card.rank)")
-        count.setSlot("counts", value: "\(cardCount[card.rank])")
+        count.setSlot("counts", value: "\(cardCount[card.rank-1])")
         self.dm.addToDM(count)
     }
     

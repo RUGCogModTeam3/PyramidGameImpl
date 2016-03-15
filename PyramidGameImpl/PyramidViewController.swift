@@ -215,9 +215,9 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         }
     }
     
-    var state: UIState = UIState.MemorizeFirst {
+    var state: UIState? {
         didSet {
-            state.setup(self)
+            state?.setup(self)
         }
     }
     
@@ -244,9 +244,9 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         pcards.append(pcard12)
         pcards.append(pcard11)
         
-        state = .MemorizeFirst
-        
         pModel.loadModel("pyramid")
+        
+        state = .MemorizeFirst
     }
     
     func showHandCard(ndx:Int) {
@@ -291,14 +291,14 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     @IBAction func clickCard(sender: UIButton) {
-        state.clickCard(self, ndx: getCardNdx(sender))
+        state!.clickCard(self, ndx: getCardNdx(sender))
     }
     
     @IBAction func clickAB1(sender: UIButton) {
-        state.clickAB1(self)
+        state!.clickAB1(self)
     }
     @IBAction func clickAB2(sender: UIButton) {
-        state.clickAB2(self)
+        state!.clickAB2(self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

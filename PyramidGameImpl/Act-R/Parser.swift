@@ -13,11 +13,11 @@ class Parser  {
     private let m: Model
 
 
-init(model: Model, text: String) {
-    m = model
-    t = Tokenizer(s: text)
-    model.modelText = text
-}
+    init(model: Model, text: String) {
+        m = model
+        t = Tokenizer(s: text)
+        model.modelText = text
+    }
 
     func parseModel() {
         while (t.token != nil) {
