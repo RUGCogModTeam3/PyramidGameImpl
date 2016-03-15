@@ -7,7 +7,7 @@ class PyramidClass: Model {
     override init(){
         super.init()
         for i in 1...13{
-            var count = Chunk(s:"count",m:self)
+            let count = Chunk(s:"count",m:self)
             count.setSlot("isa", value: "cardcount")
             count.setSlot("cardrank", value: "\(i)")
             count.setSlot("counts", value: "0")
@@ -15,15 +15,17 @@ class PyramidClass: Model {
         }
     }
     
-    func storeModelCard(card: Card){
+    // Store a card in the model's hand. Automatically calls storeCard (see below)
+    func storeModelCard(card: Card, ndx: Int){
         let cardchunk = Chunk(s:"modelcard",m:self)
         cardchunk.setSlot("isa", value: "modelcard")
         cardchunk.setSlot("rank",value: "\(card.rank)")
-        cardchunk.setSlot("location",value: "\(card.rank)")
+        cardchunk.setSlot("location",value: "\(ndx)")
         self.dm.addToDM(cardchunk)
-        
+        storeCard(card)
     }
     
+    // Store any card seen in the game
     func storeCard(card: Card){
         let cardchunk = Chunk(s:"modelcard",m:self)
         cardchunk.setSlot("isa", value: "card")
@@ -37,55 +39,49 @@ class PyramidClass: Model {
         self.dm.addToDM(count)
     }
     
-    func storeBluff(param: String, choice: String){
-        if(param == "player"){
-            let cardchunk = Chunk(s:"playerbluff",m:self)
-            cardchunk.setSlot("isa", value: "didbluff")
-            cardchunk.setSlot("value", value: choice)
-            self.dm.addToDM(cardchunk)
-        }else{
-            let cardchunk = Chunk(s:"modelbluff",m:self)
-            cardchunk.setSlot("isa", value: "bluff")
-            cardchunk.setSlot("called", value: choice)
-            self.dm.addToDM(cardchunk)
-        }
+    // Record if the player did bluff
+    func storePlayerBluff(choice: Bool){
+        let cardchunk = Chunk(s:"playerbluff",m:self)
+        cardchunk.setSlot("isa", value: "didbluff")
+        cardchunk.setSlot("value", value: "\(choice)")
+        self.dm.addToDM(cardchunk)
     }
     
-    //func callBullshit() -> Bool {
-      //  return arc4random_uniform(2) == 1
-    //}
-    
-    func callBullshit() -> Bool{
-        return self.lastAction("decision")! == "yes"
+    // Record if the player calls a bluff
+    func storePlayerBluffCall(choice: Bool) {
+        let cardchunk = Chunk(s:"modelbluff",m:self)
+        cardchunk.setSlot("isa", value: "bluff")
+        cardchunk.setSlot("called", value: "\(choice)")
+        self.dm.addToDM(cardchunk)
     }
     
-    func getPlay()->Int?{
+    // Does the model call bullshit on the player?
+    func callBullshit(lastRevealedCard: Card) -> Bool {
+        self.modifyLastAction("userplay", value: String(lastRevealedCard.rank))
+        self.run()
+        return self.lastAction("decision")! == "true"
+    }
+    
+    // What action will the model take?
+    func getPlay(lastRevealedCard: Card)->Int?{
+        self.modifyLastAction("card", value: String(lastRevealedCard.rank))
+        self.run()
         switch(self.lastAction("location")!){
-        case ("0"):
+        case "0":
             return 1
-        case ("1"):
+        case "1":
             return 2
-        case ("2"):
+        case "2":
             return 3
-        case ("3"):
+        case "3":
             return 4
-        case ("4"):
+        case "4":
             return nil
-        case ("5"):
+        case "5":
             return Int(arc4random_uniform(4))
         default:
             return Int(arc4random_uniform(4))
         }
-    }
-    
-    func inputPlay(card: Card, param: String){
-        var action: String
-        if(param=="userplay"){
-            action = "userplay"
-        }else{
-            action = "card"
-        }
-        self.modifyLastAction(action, value: String(card.rank))
     }
     
 }
