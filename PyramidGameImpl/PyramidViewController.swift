@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 enum UIState {
     case MemorizeFirst, HumanYesNo, HumanSelect, HumanBS(ndx:Int), HumanNewCard(ndx:Int), ModelSelect, ModelPass, ModelBS(ndx:Int), ModelPostBS(ndx:Int, call:Bool);
     
@@ -74,6 +76,8 @@ enum UIState {
             for i in 0..<4 {
                 c.showHandCard(i)
                 c.raiseHandCard(i)
+                //c.pModel.storeCard(c.game.players[.Right]!.hand[i])
+                //c.pModel.storeModelCard(c.game.players[.Right]!.hand[i])
             }
             c.setABTitles("Next", nil)
             c.tutorialText = "Welcome mortal! Remember your cards well..."
@@ -83,6 +87,7 @@ enum UIState {
             c.game.nextTurn()
             
             let nextCard = c.game.pyramid.getLastFlippedCard()
+            //c.pModel.storeCard(nextCard)
             c.pcards.popLast()!.image = nextCard.image
             c.tutorialText = "Well, human, do you have a \(nextCard.rankName)?"
             
@@ -93,18 +98,24 @@ enum UIState {
         case let .HumanBS(ndx):
             let lPreScore = c.game.players[.Left]!.score
             let rPreScore = c.game.players[.Right]!.score
+            //c.pModel.inputPlay(c.game.pyramid.getLastFlippedCard(),"userplay")
+            //c.pModel.run()
+            //c.pModel.getBluff (which isn't implemented yet)
             c.setABTitles("Next", nil)
             let callBS = c.model.callBullshit()
             var bsText = ""
             if callBS {
                 bsText = "Show me your card! I believe you are bluffing...\n\n"
                 c.showHandCard(ndx)
+                //c.pModel.storeCard(c.game.players[.Left]!.hand[ndx])
                 c.game.callBullshit(.Left, call:callBS)
                 let lDiff = c.game.players[.Left]!.score - lPreScore
                 let rDiff = c.game.players[.Right]!.score - rPreScore
                 if lDiff > 0 {
+                    //c.pModel.storeBluff("player","no")
                     bsText = bsText + "But you were telling the truth! You get \(lDiff) points."
                 } else {
+                    //c.pModel.storeBluff("player","yes")
                     bsText = bsText + "I was right! I get \(rDiff) points."
                 }
             } else {
@@ -120,6 +131,10 @@ enum UIState {
             
         case .ModelSelect:
             let choice = c.model.chooseCard()
+            //c.pModel.inputPlay(c.game.pyramid.getLastFlippedCard(),"card")
+            //c.pModel.run()
+            //let choice = c.pModel.getPlay()
+    
             c.game.selectCard(.Right, ndx: choice)
             if let ndx = choice {
                 c.state = .ModelBS(ndx:ndx)
@@ -136,13 +151,16 @@ enum UIState {
             c.tutorialText = "It is now my turn! I do have a \(c.game.pyramid.getLastFlippedCard().rankName).\n\nDo you think I am bluffing?"
             print(ndx)
             
-        case let .ModelPostBS(_, call):
+        case let .ModelPostBS(ndx, call):
             let lPreScore = c.game.players[.Left]!.score
             let rPreScore = c.game.players[.Right]!.score
             c.game.callBullshit(.Right, call:call)
+            //c.pModel.storeCard(c.game.players[.Right]!.hand[ndx])
+            //c.pModel.storeModelCard(c.game.players[.Right]!.hand[ndx])
             c.setABTitles("Next", nil)
             var textBase = ""
             if (call) {
+                //c.pModel.storeBluff("model","yes")
                 let lDiff = c.game.players[.Left]!.score - lPreScore
                 let rDiff = c.game.players[.Right]!.score - rPreScore
                 if lDiff > 0 {
@@ -151,6 +169,7 @@ enum UIState {
                     textBase = "Ha! I was telling the truth! I get \(rDiff) points."
                 }
             } else {
+                //c.pModel.storeBluff("model","no")
                 textBase = "Very well, mortal. I get \(c.game.pyramid.rowValue()) points."
             }
             c.tutorialText = textBase + "\n\nNow I get a new card."
@@ -163,7 +182,10 @@ enum UIState {
 }
 
 class PyramidViewController: UIViewController, UIPopoverPresentationControllerDelegate {
-
+    //Initialize a pyramidmodel and load the right model. Not sure why it gives a warning though
+	var pModel = PyramidClass()
+    //pModel.loadModel("pyramid") Does this have to be in the viewDidLoad?
+    
     var model = PyramidModel()
     var game = PyramidGame(numRanks:13, numSuits:4, pyramidRows:4, handSize:4)
     

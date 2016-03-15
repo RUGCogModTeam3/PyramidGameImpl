@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29D482521C96E375000CF8A5 /* pyramid.actr in Resources */ = {isa = PBXBuildFile; fileRef = 29D4824F1C96E375000CF8A5 /* pyramid.actr */; };
+		29D482531C96E375000CF8A5 /* PyramidClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D482501C96E375000CF8A5 /* PyramidClass.swift */; };
 		ABF55E251C9329D800E6CEE5 /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */; };
 		CF61BDBC1C8D9F8E00CBA055 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */; };
 		CF61BDBE1C8D9F8E00CBA055 /* PyramidViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */; };
@@ -50,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		29D4824F1C96E375000CF8A5 /* pyramid.actr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pyramid.actr; sourceTree = "<group>"; };
+		29D482501C96E375000CF8A5 /* PyramidClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyramidClass.swift; sourceTree = "<group>"; };
 		ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
 		CF61BDB81C8D9F8E00CBA055 /* PyramidGameImpl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PyramidGameImpl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +110,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A058A7051C981BFE0090E5AE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				29D4824F1C96E375000CF8A5 /* pyramid.actr */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		CF61BDAF1C8D9F8E00CBA055 = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +141,7 @@
 		CF61BDBA1C8D9F8E00CBA055 /* PyramidGameImpl */ = {
 			isa = PBXGroup;
 			children = (
+				A058A7051C981BFE0090E5AE /* Models */,
 				CF61BE081C8DA21000CBA055 /* Act-R */,
 				CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */,
 				CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */,
@@ -136,6 +149,7 @@
 				ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */,
 				CF61BDE91C8D9FB700CBA055 /* Assets.xcassets */,
 				CF61BDEB1C8DA03A00CBA055 /* PyramidGame.swift */,
+				29D482501C96E375000CF8A5 /* PyramidClass.swift */,
 				CF61BE231C8DC67300CBA055 /* PyramidModel.swift */,
 				CF61BDC41C8D9F8E00CBA055 /* LaunchScreen.storyboard */,
 				CF61BDC71C8D9F8E00CBA055 /* Info.plist */,
@@ -287,6 +301,7 @@
 			files = (
 				CF61BDC61C8D9F8E00CBA055 /* LaunchScreen.storyboard in Resources */,
 				CF61BDEA1C8D9FB700CBA055 /* Assets.xcassets in Resources */,
+				29D482521C96E375000CF8A5 /* pyramid.actr in Resources */,
 				CF61BDC11C8D9F8E00CBA055 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,6 +341,7 @@
 				CF61BE161C8DA24C00CBA055 /* BufferAction.swift in Sources */,
 				CF61BDBE1C8D9F8E00CBA055 /* PyramidViewController.swift in Sources */,
 				CF61BE211C8DA24C00CBA055 /* Support.swift in Sources */,
+				29D482531C96E375000CF8A5 /* PyramidClass.swift in Sources */,
 				ABF55E251C9329D800E6CEE5 /* DialogViewController.swift in Sources */,
 				CF61BE1D1C8DA24C00CBA055 /* Procedural.swift in Sources */,
 				CF61BDBC1C8D9F8E00CBA055 /* AppDelegate.swift in Sources */,
