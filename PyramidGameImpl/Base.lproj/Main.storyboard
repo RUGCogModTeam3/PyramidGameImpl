@@ -619,7 +619,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNG-zN-5ma">
-                                        <rect key="frame" x="0.0" y="0.0" width="148" height="130"/>
+                                        <rect key="frame" x="-20" y="-20" width="30" height="30"/>
                                         <connections>
                                             <segue destination="miS-fA-4Ts" kind="popoverPresentation" identifier="showDialog" popoverAnchorView="zNG-zN-5ma" id="kja-to-QcQ">
                                                 <popoverArrowDirection key="popoverArrowDirection" left="YES"/>
