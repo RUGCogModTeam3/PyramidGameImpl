@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,7 +18,43 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradiant" translatesAutoresizingMaskIntoConstraints="NO" id="Rjk-U3-Vdo">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trophy" translatesAutoresizingMaskIntoConstraints="NO" id="T8C-pk-0pm">
+                                <rect key="frame" x="213" y="218" width="175" height="164"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="175" id="DTs-ti-34O"/>
+                                    <constraint firstAttribute="width" secondItem="T8C-pk-0pm" secondAttribute="height" multiplier="175:164" id="LYg-Cf-2SS"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The pyramid game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mOI-7Y-9WK">
+                                <rect key="frame" x="216" y="194" width="168" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Can you win?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMk-Ic-gI4">
+                                <rect key="frame" x="240" y="382" width="121" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mOI-7Y-9WK" firstAttribute="centerX" secondItem="Rjk-U3-Vdo" secondAttribute="centerX" id="3VI-me-8Bt"/>
+                            <constraint firstItem="Rjk-U3-Vdo" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" id="AWF-XD-VGQ"/>
+                            <constraint firstItem="T8C-pk-0pm" firstAttribute="centerY" secondItem="Rjk-U3-Vdo" secondAttribute="centerY" id="EjY-Jb-IZh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Rjk-U3-Vdo" secondAttribute="trailing" constant="-20" id="J63-Rg-ncM"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Rjk-U3-Vdo" secondAttribute="bottom" id="OwJ-yn-Njk"/>
+                            <constraint firstItem="cMk-Ic-gI4" firstAttribute="centerX" secondItem="Rjk-U3-Vdo" secondAttribute="centerX" id="RfN-dV-XpO"/>
+                            <constraint firstItem="T8C-pk-0pm" firstAttribute="top" secondItem="mOI-7Y-9WK" secondAttribute="bottom" id="T20-pl-eii"/>
+                            <constraint firstItem="Rjk-U3-Vdo" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-20" id="XrC-Ha-OrN"/>
+                            <constraint firstItem="T8C-pk-0pm" firstAttribute="centerX" secondItem="Rjk-U3-Vdo" secondAttribute="centerX" id="o7b-aR-jX8"/>
+                            <constraint firstItem="cMk-Ic-gI4" firstAttribute="top" secondItem="T8C-pk-0pm" secondAttribute="bottom" id="ovb-Vy-KgZ"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -24,4 +62,8 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="gradiant" width="768" height="1024"/>
+        <image name="trophy" width="256" height="256"/>
+    </resources>
 </document>
