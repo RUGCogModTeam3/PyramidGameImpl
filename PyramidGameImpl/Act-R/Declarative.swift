@@ -9,7 +9,7 @@
 import Foundation
 
 class Declarative  {
-    
+
     var baseLevelDecay: Double = 0.5
     var optimizedLearning = false
     var maximumAssociativeStrength: Double = 3
@@ -54,7 +54,7 @@ class Declarative  {
                 default: break
                 }
             }
-        return chunk
+            return chunk
         }
     }
     
@@ -96,6 +96,7 @@ class Declarative  {
                 bestMatch = ch1
             }
         }
+        print("search:\(chunk) bestMatch:\(bestMatch)")
         if bestActivation > retrievalThreshold {
             return (latency(bestActivation) , bestMatch)
         } else {
@@ -107,9 +108,9 @@ class Declarative  {
     
 
     
-    func partialRetrieve(chunk: Chunk, mismatchFunction: (x: Value, y: Value) -> Double? ) -> Chunk? {
+    func partialRetrieve(chunk: Chunk, mismatchFunction: (x: Value, y: Value) -> Double? ) -> (Double, Chunk?) {
         var bestMatch: Chunk? = nil
-        var bestActivation: Double = retrievalThreshold - 100.0
+        var bestActivation: Double = retrievalThreshold
         chunkloop: for (_,ch1) in chunks {
             var mismatch = 0.0
             for (slot,value) in chunk.slotvals {
@@ -117,7 +118,7 @@ class Declarative  {
                     if !val1.isEqual(value) {
                         let slotmismatch = mismatchFunction(x: val1, y: value)
                         if slotmismatch != nil {
-                            mismatch += slotmismatch!
+                            mismatch += slotmismatch! * misMatchPenalty
                         } else
                         {
                             continue chunkloop
@@ -131,7 +132,12 @@ class Declarative  {
                 bestMatch = ch1
             }
         }
-        return bestMatch
+        if bestActivation > retrievalThreshold {
+            return (latency(bestActivation) , bestMatch)
+        } else {
+            retrieveError = true
+            return (latency(retrievalThreshold), nil)
+        }
     }
 
     

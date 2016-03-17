@@ -1,0 +1,221 @@
+;;; Model of the Pyramid Game
+;;;
+
+(add-dm
+    (goal isa goal state observecard)
+)
+
+(set-all-baselevels -100 10) ;; time offset and number of references
+
+;; At the start of the model, retrieve any decision
+
+;;if (goal.isa(goal) && goal.state == observecard && action.isa(card)) {
+;;  goal.state = comparecard
+;;  retrieval.isa = modelcard
+;;  retrieval.rank = action.rank
+;;}
+(p check-card
+    =goal>
+        isa goal
+        state observecard
+    =action>
+        isa card
+        rank =value
+==>
+    =goal>
+        state comparecard
+        rank =value
+    +retrieval>
+        isa modelcard
+        rank =value
+)
+
+(p play-card
+    =goal>
+        isa goal
+        state comparecard
+    =retrieval>
+        isa modelcard
+        location =location
+==>
+    =goal>
+        state observecard
+    +action>
+        isa play
+        location =location
+)
+
+(p initiate-bluff
+    =goal>
+        isa goal
+        state comparecard
+        rank =value
+    ?retrieval>
+        state error
+==>
+    =goal>
+        isa goal
+        state decidebluff
+    +retrieval>
+        isa cardcount
+        cardrank =value
+)
+
+(p no-bluff
+    =goal>
+        isa goal
+        state decidebluff
+    =retrieval>
+        isa cardcount
+        counts high
+==>
+    =goal>
+        state observecard
+    +action>
+        isa play
+        location none ;;Or something else that indicates that no cards are played
+)
+
+(p consider-bluff
+    =goal>
+        isa goal
+        state decidebluff
+    =retrieval>
+        isa cardcount
+        counts low
+==>
+    =goal>
+        state mightbluff
+    +retrieval>
+        isa bluff
+)
+
+(p wtf
+    =goal>
+        isa goal
+        state decidebluff
+    ?retrieval>
+        state error
+==>
+    =goal>
+        isa wtf
+)
+
+(p initial-bluff
+    =goal>
+        isa goal
+        state mightbluff
+    ?retrieval>
+        state error
+==>
+    =goal>
+        state observecard
+    +action>
+        isa play
+        location random ;;Or something else that indicates that random card can be played
+)
+
+(p do-bluff
+    =goal>
+        isa goal
+        state mightbluff
+    =retrieval>
+        isa bluff
+        called false
+==>
+    =goal>
+        state observecard
+    +action>
+        isa play
+        location random ;;Or something else that indicates that random card can be played
+)
+
+(p dont-bluff
+    =goal>
+        isa goal
+        state mightbluff
+    =retrieval>
+        isa bluff
+        called true
+==>
+    =goal>
+        state observecard
+    +action>
+        isa play
+        location none ;;Or something else that indicates that no card is played
+)
+
+(p user-play
+    =goal>
+        isa goal
+        state observecard
+    =action>
+        isa userplay
+        rank =value
+==>
+    =goal>
+        state playerbluff
+    +retrieval>
+        isa cardcount
+        cardrank =value
+)
+
+(p player-bluff
+    =goal>
+        isa goal
+        state playerbluff
+    =retrieval>
+        isa cardcount
+        counts high
+==>
+    =goal>
+        state observecard
+    +action>
+        isa callbluff
+        decision true
+)
+
+(p player-mightbluff
+    =goal>
+        isa goal
+        state playerbluff
+    =retrieval>
+        isa cardcount
+        counts low
+==>
+    =goal>
+        state playermbluff
+    +retrieval>
+        isa didbluff
+)
+
+(p initial-didbluff
+    =goal>
+        isa goal
+        state playermbluff
+    ?retrieval>
+        state error
+==>
+    =goal>
+        state observecard
+    +action>
+        isa callbluff
+        decision true
+)
+
+(p didbluff
+    =goal>
+        isa goal
+        state playermbluff
+    =retrieval>
+        isa didbluff
+        value =decision
+==>
+    =goal>
+        state observecard
+    +action>
+        isa callbluff
+        decision =decision
+)
+
+(goal-focus goal)

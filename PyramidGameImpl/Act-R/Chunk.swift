@@ -44,14 +44,15 @@ class Chunk: CustomStringConvertible {
     */
     var description: String {
         get {
-            var s = "\(name)\n"
-            for slot in printOrder {
-                if let val = slotvals[slot] {
-                    s += "  \(slot)  \(val)\n"
-                }
-            }
+            //var s = "\(name)\n"
+            //for slot in printOrder {
+            //    if let val = slotvals[slot] {
+            //        s += "  \(slot)  \(val)\n"
+            //    }
+            //}
 
-            return s
+            //return s
+            return "\(name):\(self.slotvals)"
         }
     }
     

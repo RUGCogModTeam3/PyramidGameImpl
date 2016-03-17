@@ -13,11 +13,11 @@ class Parser  {
     private let m: Model
 
 
-init(model: Model, text: String) {
-    m = model
-    t = Tokenizer(s: text)
-    model.modelText = text
-}
+    init(model: Model, text: String) {
+        m = model
+        t = Tokenizer(s: text)
+        model.modelText = text
+    }
 
     func parseModel() {
         while (t.token != nil) {
@@ -183,9 +183,9 @@ init(model: Model, text: String) {
 
     
     private func parseSlotAction() -> SlotAction? {
-        //var op: String? = nil
+        var op: String? = nil
         if (t.token == "-" || t.token == "<" || t.token == ">" || t.token == "<=" || t.token == ">=") {
-            //op = t.token
+            op = t.token
             t.nextToken()
         }
         let slot = t.token
