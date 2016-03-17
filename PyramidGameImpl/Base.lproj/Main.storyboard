@@ -131,7 +131,6 @@
         <!--View Controller-->
         <scene sceneID="LJc-fW-JtE">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tmw-Pm-jAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="cSf-yO-szi" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bYd-49-CQr"/>
@@ -255,6 +254,7 @@
                         </constraints>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tmw-Pm-jAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-767" y="1151"/>
         </scene>
