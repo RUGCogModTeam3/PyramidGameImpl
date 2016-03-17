@@ -67,33 +67,34 @@ class PyramidClass: Model {
         print("callBS? \(self.dm.chunks)")
         return self.lastAction("decision")! == "true"
     }
+
+    func retrieve(slots:[String:String]) {
+        //TODO: Timing
+        let retrieveChunk = generateNewChunk("retrieve")
+        for (slot,value) in slots {
+            chunk.setSlot(slot, value:value)
+        }
+        return dm.retrieve(retrieveChunk).1
+    }
     
     // What action will the model take?
     func getPlay(lastRevealedCard: Card)->Int?{
-        self.buffers["action"] = generateNewChunk("action")
-        self.modifyLastAction("isa", value: "card")
-        self.modifyLastAction("rank", value: String(lastRevealedCard.rank))
-        print(self.buffers)
-        self.run()
-        print(self.buffers)
-        switch(self.lastAction("location")!){
-        case "0":
-            return 0
-        case "1":
-            return 1
-        case "2":
-            return 2
-        case "3":
-            return 3
-        case "none":
-            print("none")
-            return nil
-        case "random":
-            print("random")
-            return Int(arc4random_uniform(4))
-        default:
-            print("default!!!!")
-            return Int(arc4random_uniform(4))
+        let rank = "\(lastRevealedCard.rank)"
+        if let cardChunk = retrieve(["isa":"modelcard","rank":rank]) {
+            return Int(chunk.slotValue("location"))
+        } else {
+           if let countChunk = retrieve(["isa":"cardcount","cardrank":rank]) {
+               if countChunk.slotValue("counts") == "high" {
+                   return nil
+               } else {
+                   // count previous bluffs
+                   print("TODO")
+                   return Int(arc4random_uniform(4))
+               }
+           } else {
+               print("This shouldn't happen")
+               return nil
+           }
         }
     }
     

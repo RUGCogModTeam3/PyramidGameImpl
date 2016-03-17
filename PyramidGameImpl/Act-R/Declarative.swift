@@ -54,7 +54,7 @@ class Declarative  {
                 default: break
                 }
             }
-        return chunk
+            return chunk
         }
     }
     
