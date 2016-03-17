@@ -18,20 +18,25 @@ class PyramidClass: Model {
     // Store a card in the model's hand. Automatically calls storeCard (see below)
     func storeModelCard(card: Card, ndx: Int){
         print(card)
-        let cardchunk = generateNewChunk("modelcard")
-        cardchunk.setSlot("isa", value: "modelcard")
-        cardchunk.setSlot("rank",value: "\(card.rank)")
-        cardchunk.setSlot("location",value: "\(ndx)")
-        self.dm.addToDM(cardchunk)
+        for i in -1...1{
+            let upper = max(ndx,(ndx+i))
+            let lower = min(ndx,(ndx+i))
+            let cardlocation = generateNewChunk("modelcard")
+            cardlocation.setSlot("isa", value: "modelcard")
+            cardlocation.setSlot("rank",value: "\(card.rank)")
+            cardlocation.setSlot("lower",value: "\(lower)")
+            cardlocation.setSlot("upper",value: "\(upper)")
+            self.dm.addToDM(cardlocation)
+        }
         storeCard(card)
     }
     
     // Store any card seen in the game
     func storeCard(card: Card){
-        let cardchunk = generateNewChunk("modelcard")
-        cardchunk.setSlot("isa", value: "card")
-        cardchunk.setSlot("rank",value: "\(card.rank)")
-        self.dm.addToDM(cardchunk)
+        //let cardchunk = generateNewChunk("card") //Is there a reason we do this
+        //cardchunk.setSlot("isa", value: "card")
+        //cardchunk.setSlot("rank",value: "\(card.rank)")
+        //self.dm.addToDM(cardchunk)
         cardCount[card.rank-1]+=1
         let count = generateNewChunk("count")
         count.setSlot("isa", value: "cardcount")
@@ -76,7 +81,15 @@ class PyramidClass: Model {
     func getPlay(lastRevealedCard: Card)->Int? {
         let rank = "\(lastRevealedCard.rank)"
         if let cardChunk = self.retrieve(["isa":"modelcard","rank":rank]) {
-            return Int(cardChunk.slotTextValue("location")!)
+            let lower = Int(cardChunk.slotTextValue("lower")!)
+            let upper = Int(cardChunk.slotTextValue("upper")!)
+            if(lower<0){
+                return upper
+            }else if(upper>3){
+                return lower
+            }else{
+                return arc4random_uniform(lower..upper)
+            }
         } else {
             if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
                 if countChunk.slotTextValue("counts")! == "high" {
@@ -117,8 +130,9 @@ class PyramidClass: Model {
         }
     }
     
+    //Problem: how do you want to rehearse with the different ranges?
     func rehearse(ndx:Int) {
-        if let chunk = self.retrieve(["isa":"modelcard", "location":"\(ndx)"]) {
+        if let chunk = self.retrieve(["isa":"modelcard", "lower":"\(ndx)", "upper":"\(ndx)"]) {
             self.dm.addToDM(chunk)
         }
     }
