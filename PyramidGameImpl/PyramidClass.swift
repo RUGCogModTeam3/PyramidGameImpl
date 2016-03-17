@@ -17,7 +17,7 @@ class PyramidClass: Model {
     
     // Store a card in the model's hand. Automatically calls storeCard (see below)
     func storeModelCard(card: Card, ndx: Int){
-        print(card)
+        print(card.rank, ndx)
         for i in -1...1{
             let upper = max(ndx,(ndx+i))
             let lower = min(ndx,(ndx+i))
@@ -26,6 +26,7 @@ class PyramidClass: Model {
             cardlocation.setSlot("rank",value: "\(card.rank)")
             cardlocation.setSlot("lower",value: "\(lower)")
             cardlocation.setSlot("upper",value: "\(upper)")
+            self.dm.addToDM(cardlocation)
             self.dm.addToDM(cardlocation)
         }
         storeCard(card)
@@ -81,15 +82,11 @@ class PyramidClass: Model {
     func getPlay(lastRevealedCard: Card)->Int? {
         let rank = "\(lastRevealedCard.rank)"
         if let cardChunk = self.retrieve(["isa":"modelcard","rank":rank]) {
-            let lower = Int(cardChunk.slotTextValue("lower")!)
-            let upper = Int(cardChunk.slotTextValue("upper")!)
-            if(lower<0){
-                return upper
-            }else if(upper>3){
-                return lower
-            }else{
-                return arc4random_uniform(lower..upper)
-            }
+            let lower = max(Int(cardChunk.slotTextValue("lower")!)!, 0)
+            let upper = min(Int(cardChunk.slotTextValue("upper")!)!,3)
+            let play = (lower+Int(arc4random_uniform(UInt32(1+upper-lower))))
+            print("getPlay lower:\(lower) upper:\(upper) play:\(play)")
+            return play
         } else {
             if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
                 if countChunk.slotTextValue("counts")! == "high" {
@@ -132,7 +129,10 @@ class PyramidClass: Model {
     
     //Problem: how do you want to rehearse with the different ranges?
     func rehearse(ndx:Int) {
-        if let chunk = self.retrieve(["isa":"modelcard", "lower":"\(ndx)", "upper":"\(ndx)"]) {
+        if let chunk = self.retrieve(["isa":"modelcard", "lower":"\(ndx)"]) {
+            self.dm.addToDM(chunk)
+        }
+        if let chunk = self.retrieve(["isa":"modelcard", "upper":"\(ndx)"]) {
             self.dm.addToDM(chunk)
         }
     }
