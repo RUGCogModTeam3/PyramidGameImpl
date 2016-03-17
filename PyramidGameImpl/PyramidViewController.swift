@@ -217,7 +217,10 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     
     var state: UIState? {
         didSet {
-            state?.setup(self)
+            if let unwrappedState = state {
+                pModel.observeState(unwrappedState)
+                unwrappedState.setup(self)
+            }
         }
     }
     
@@ -288,6 +291,10 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         } else {
             actionButton2.hidden = true;
         }
+    }
+    
+    func finishGame() {
+        
     }
     
     @IBAction func clickCard(sender: UIButton) {
