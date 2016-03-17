@@ -78,7 +78,15 @@ class PyramidClass: Model {
         }
     }
     
+    func makeChoice(bluffProbability: Int)-> Int?{
+        if(Int(arc4random_uniform(100))<bluffProbability){
+            return Int(arc4random_uniform(4))
+        }
+        return nil
+    }
+    
     // What action will the model take?
+    //func getPlay(lastRevealedCard: Card, modelScore: Int, playerScore: Int)->Int? {
     func getPlay(lastRevealedCard: Card)->Int? {
         let rank = "\(lastRevealedCard.rank)"
         if let cardChunk = self.retrieve(["isa":"modelcard","rank":rank]) {
@@ -87,21 +95,23 @@ class PyramidClass: Model {
             let play = (lower+Int(arc4random_uniform(UInt32(1+upper-lower))))
             print("getPlay lower:\(lower) upper:\(upper) play:\(play)")
             return play
-        } else {
+        } //else if(modelScore-playerScore>minPoints){
+           // return nil
+        //}
+        else{
             if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
                 if countChunk.slotTextValue("counts")! == "high" {
-                    return nil
+                    return makeChoice(25)
                 }
             }
-            
             if let bluffChunk = self.retrieve(["isa":"playercalledbluff"]) {
                 if bluffChunk.slotTextValue("called")! == "true" {
-                    return nil
+                    return makeChoice(35)
                 } else {
-                    return Int(arc4random_uniform(4))
+                    return makeChoice(80)
                 }
             } else {
-                return Int(arc4random_uniform(4))
+                return makeChoice(50)
             }
         }
     }
@@ -146,5 +156,18 @@ extension Chunk {
         default:
             return nil
         }
+    }
+}
+
+extension Pyramid {
+    func remainingNonBluffPoints()->Int {
+        var points = 0
+        for (var col = currCol; isValidNdx(currRow, col); col++) {
+            points += currRow+1
+        }
+        for (var offset = 1; rows-offset > currRow; offset++) {
+            points += (rows-offset+1)*offset
+        }
+        return points
     }
 }
