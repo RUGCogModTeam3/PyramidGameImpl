@@ -98,4 +98,16 @@ class PyramidClass: Model {
         }
     }
     
+    // Repetition of the cards
+    func repetition(ndx: Int){
+        let card = generateNewChunk("handcard")
+        card.setSlot("isa", value: "modelcard")
+        card.setSlot("location",value: "\(ndx)")
+        let (_,chunk) = self.dm.retrieve(card)
+        if(chunk!=nil){
+            self.dm.addToDM(chunk)
+        }
+
+    }
+    
 }
