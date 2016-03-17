@@ -43,71 +43,94 @@ class PyramidClass: Model {
     // Record if the player did bluff
     func storePlayerBluff(choice: Bool){
         let cardchunk = generateNewChunk("playerbluff")
-        cardchunk.setSlot("isa", value: "didbluff")
-        cardchunk.setSlot("value", value: "\(choice)")
+        cardchunk.setSlot("isa", value: "playerbluff")
+        cardchunk.setSlot("didbluff", value: "\(choice)")
         self.dm.addToDM(cardchunk)
     }
     
     // Record if the player calls a bluff
     func storePlayerBluffCall(choice: Bool) {
         let cardchunk = generateNewChunk("modelbluff")
-        cardchunk.setSlot("isa", value: "bluff")
+        cardchunk.setSlot("isa", value: "playercalledbluff")
         cardchunk.setSlot("called", value: "\(choice)")
         self.dm.addToDM(cardchunk)
     }
     
     // Does the model call bullshit on the player?
     func callBullshit(lastRevealedCard: Card) -> Bool {
-        self.buffers["action"] = generateNewChunk("action")
-        self.modifyLastAction("isa", value: "userplay")
-        self.modifyLastAction("rank", value: String(lastRevealedCard.rank))
-        print(self.buffers)
-        self.run()
-        print(self.buffers)
-        print("callBS? \(self.dm.chunks)")
-        return self.lastAction("decision")! == "true"
-    }
-
-    func retrieve(slots:[String:String]) {
-        //TODO: Timing
-        let retrieveChunk = generateNewChunk("retrieve")
-        for (slot,value) in slots {
-            chunk.setSlot(slot, value:value)
+        let rank = "\(lastRevealedCard.rank)"
+        if let cardChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
+            if cardChunk.slotTextValue("counts")! == "high" {
+                return true
+            }
         }
-        return dm.retrieve(retrieveChunk).1
+        
+        if let bluffChunk = self.retrieve(["isa":"playerbluff"]) {
+            return bluffChunk.slotTextValue("didbluff")! == "true"
+        } else {
+            return true
+        }
     }
     
     // What action will the model take?
-    func getPlay(lastRevealedCard: Card)->Int?{
+    func getPlay(lastRevealedCard: Card)->Int? {
         let rank = "\(lastRevealedCard.rank)"
-        if let cardChunk = retrieve(["isa":"modelcard","rank":rank]) {
-            return Int(chunk.slotValue("location"))
+        if let cardChunk = self.retrieve(["isa":"modelcard","rank":rank]) {
+            return Int(cardChunk.slotTextValue("location")!)
         } else {
-           if let countChunk = retrieve(["isa":"cardcount","cardrank":rank]) {
-               if countChunk.slotValue("counts") == "high" {
-                   return nil
-               } else {
-                   // count previous bluffs
-                   print("TODO")
-                   return Int(arc4random_uniform(4))
-               }
-           } else {
-               print("This shouldn't happen")
-               return nil
-           }
+            if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
+                if countChunk.slotTextValue("counts")! == "high" {
+                    return nil
+                }
+            }
+            
+            if let bluffChunk = self.retrieve(["isa":"playercalledbluff"]) {
+                if bluffChunk.slotTextValue("called")! == "true" {
+                    return nil
+                } else {
+                    return Int(arc4random_uniform(4))
+                }
+            } else {
+                return Int(arc4random_uniform(4))
+            }
         }
     }
     
-    // Repetition of the cards
-    func repetition(ndx: Int){
-        let card = generateNewChunk("handcard")
-        card.setSlot("isa", value: "modelcard")
-        card.setSlot("location",value: "\(ndx)")
-        let (_,chunk) = self.dm.retrieve(card)
-        if(chunk!=nil){
+    func retrieve(slots:[String:String])->Chunk? {
+        let retrieveChunk = generateNewChunk("retrieve")
+        for (slot,value) in slots {
+            retrieveChunk.setSlot(slot, value:value)
+        }
+        let (latency, resultChunk) = dm.retrieve(retrieveChunk)
+        self.time += latency
+        return resultChunk
+    }
+    
+    func observeState(state:UIState) {
+        self.time += 5
+        switch state {
+        case .HumanYesNo:
+            for i in 0..<4 {
+                rehearse(i)
+            }
+        default: break
+        }
+    }
+    
+    func rehearse(ndx:Int) {
+        if let chunk = self.retrieve(["isa":"modelcard", "location":"\(ndx)"]) {
             self.dm.addToDM(chunk)
         }
-
     }
-    
+}
+
+extension Chunk {
+    func slotTextValue(slot: String) -> String? {
+        switch slotValue(slot) {
+        case let .Some(.Text(s)):
+            return s
+        default:
+            return nil
+        }
+    }
 }
