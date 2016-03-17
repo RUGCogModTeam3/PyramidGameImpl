@@ -322,6 +322,10 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         }
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None
     }
