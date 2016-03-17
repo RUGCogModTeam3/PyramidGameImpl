@@ -96,10 +96,12 @@ class Declarative  {
                 bestMatch = ch1
             }
         }
-        print("search:\(chunk) bestMatch:\(bestMatch)")
         if bestActivation > retrievalThreshold {
             return (latency(bestActivation) , bestMatch)
         } else {
+            if bestMatch != nil {
+                print("Had chunk, but forgot")
+            }
             retrieveError = true
             return (latency(retrievalThreshold), nil)
         }
