@@ -165,8 +165,8 @@ extension Pyramid {
         for (var col = currCol; isValidNdx(currRow, col); col++) {
             points += currRow+1
         }
-        for (var row = rows-1; row > currRow; row++) {
-            points += 1
+        for (var offset = 1; rows-offset > currRow; offset++) {
+            points += (rows-offset+1)*offset
         }
         return points
     }
