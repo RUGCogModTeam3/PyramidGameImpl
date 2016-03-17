@@ -204,6 +204,16 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBOutlet weak var card2TopConstraint: NSLayoutConstraint!
     @IBOutlet weak var card3TopConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var oppCard0: UIImageView!
+    @IBOutlet weak var oppCard1: UIImageView!
+    @IBOutlet weak var oppCard2: UIImageView!
+    @IBOutlet weak var oppCard3: UIImageView!
+    
+    @IBOutlet weak var oppCard0TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var oppCard1TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var oppCard2TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var oppCard3TopConstraint: NSLayoutConstraint!
+    
     var cards = [UIButton!]()
     var cardConstraints = [NSLayoutConstraint!]()
     var pcards = [UIImageView!]()
