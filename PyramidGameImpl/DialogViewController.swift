@@ -11,7 +11,7 @@ import UIKit
 class DialogViewController: UIViewController {
     @IBOutlet weak var textView: UILabel! {
         didSet {
-            textView.text = text;
+            textView.text = text
         }
     }
     
@@ -25,7 +25,10 @@ class DialogViewController: UIViewController {
     override var preferredContentSize: CGSize {
         get {
             if textView != nil && presentingViewController != nil {
-                return textView.sizeThatFits(presentingViewController!.view.bounds.size)
+                var size = textView.sizeThatFits(presentingViewController!.view.bounds.size)
+                size.width += 24
+                size.height += 6
+                return size
             }
             return super.preferredContentSize
         }

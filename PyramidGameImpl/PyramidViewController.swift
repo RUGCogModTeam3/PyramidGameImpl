@@ -16,10 +16,6 @@ enum UIState {
     func clickAB1(c:PyramidViewController) {
         switch self {
         case .MemorizeFirst:
-            for i in 0..<4 {
-                c.hideHandCard(i)
-                c.lowerHandCard(i)
-            }
             c.state = .HumanYesNo
             
         case .HumanYesNo:
@@ -76,19 +72,29 @@ enum UIState {
             for i in 0..<4 {
                 c.showHandCard(i)
                 c.raiseHandCard(i)
+                c.showOppHandCard(i)
+                c.raiseOppHandCard(i)
                 c.pModel.storeModelCard(c.game.players[.Right]!.hand[i], ndx:i)
             }
             c.setABTitles("Next", nil)
             c.tutorialText = "Welcome mortal! Remember your cards well..."
             
         case .HumanYesNo:
+            for i in 0..<4 {
+                c.hideHandCard(i)
+                c.lowerHandCard(i)
+                c.hideOppHandCard(i)
+                c.lowerOppHandCard(i)
+            }
             c.setABTitles("Yes/Bluff", "No")
-            c.game.nextTurn()
             
-            let nextCard = c.game.pyramid.getLastFlippedCard()
-            c.pModel.storeCard(nextCard)
-            c.pcards.popLast()!.image = nextCard.image
-            c.tutorialText = "Well, human, do you have a \(nextCard.rankName)?"
+            if let nextCard = c.game.nextTurn() {
+                c.pModel.storeCard(nextCard)
+                c.pcards.popLast()!.image = nextCard.image
+                c.tutorialText = "Well, human, do you have a \(nextCard.rankName)?"
+            } else {
+                c.finishGame()
+            }
             
         case .HumanSelect:
             c.setABTitles(nil, nil)
@@ -139,13 +145,17 @@ enum UIState {
             c.setABTitles("Next", nil)
             c.tutorialText = "It is now my turn... but I don't have a \(c.game.pyramid.getLastFlippedCard().rankName)."
             
-        case .ModelBS:
+        case let .ModelBS(ndx):
             c.setABTitles("Yes", "No")
             c.tutorialText = "It is now my turn! I do have a \(c.game.pyramid.getLastFlippedCard().rankName).\n\nDo you think I am bluffing?"
+            c.raiseOppHandCard(ndx)
             
         case let .ModelPostBS(ndx, call):
             let lPreScore = c.game.players[.Left]!.score
             let rPreScore = c.game.players[.Right]!.score
+            if call {
+                c.showOppHandCard(ndx)
+            }
             c.game.callBullshit(.Right, call:call)
             c.pModel.storeModelCard(c.game.players[.Right]!.hand[ndx], ndx:ndx)
             c.pModel.storePlayerBluffCall(call)
@@ -216,12 +226,18 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     
     var cards = [UIButton!]()
     var cardConstraints = [NSLayoutConstraint!]()
+    var oppcards = [UIImageView!]()
+    var oppcardConstraints = [NSLayoutConstraint!]()
     var pcards = [UIImageView!]()
     
-    var tutorialText: String = "" {
+    var tutorialText: String! = nil {
         didSet {
-            tutorialTextView.text = tutorialText
-            //self.performSegueWithIdentifier("showDialog", sender: self)
+            if let text = tutorialText {
+                tutorialTextView.text = text
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.performSegueWithIdentifier("showDialog", sender: self)
+                })
+            }
         }
     }
     
@@ -236,8 +252,6 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //model.loadModel("pyramid")
-        //model.run()
         cards.append(card0)
         cards.append(card1)
         cards.append(card2)
@@ -256,8 +270,14 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         pcards.append(pcard13)
         pcards.append(pcard12)
         pcards.append(pcard11)
-        
-        pModel.loadModel("pyramid")
+        oppcards.append(oppCard0)
+        oppcards.append(oppCard1)
+        oppcards.append(oppCard2)
+        oppcards.append(oppCard3)
+        oppcardConstraints.append(oppCard0TopConstraint)
+        oppcardConstraints.append(oppCard1TopConstraint)
+        oppcardConstraints.append(oppCard2TopConstraint)
+        oppcardConstraints.append(oppCard3TopConstraint)
         
         state = .MemorizeFirst
     }
@@ -277,6 +297,24 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     
     func lowerHandCard(ndx:Int) {
         cardConstraints[ndx].constant = 40
+    }
+    
+    func showOppHandCard(ndx:Int) {
+        let playerCard = game.players[.Right]!.hand[ndx]
+        print("lHand:\(game.players[.Left]!.hand) rHand:\(game.players[.Right]!.hand)")
+        oppcards[ndx].image = playerCard.image
+    }
+    
+    func hideOppHandCard(ndx:Int) {
+        oppcards[ndx].image = UIImage(named:"CardBack")
+    }
+    
+    func raiseOppHandCard(ndx:Int) {
+        oppcardConstraints[ndx].constant = 8
+    }
+    
+    func lowerOppHandCard(ndx:Int) {
+        oppcardConstraints[ndx].constant = 40
     }
     
     func getCardNdx(c:UIButton) -> Int {
@@ -304,17 +342,32 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     func finishGame() {
-        
+        let lScore = game.players[.Left]!.score
+        let rScore = game.players[.Right]!.score
+        if lScore >= rScore {
+            performSegueWithIdentifier("showWin", sender: self)
+        } else {
+            performSegueWithIdentifier("showLoss", sender: self)
+        }
+    }
+    
+    func hidePopover() {
+        if self.presentedViewController != nil {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     @IBAction func clickCard(sender: UIButton) {
+        hidePopover()
         state!.clickCard(self, ndx: getCardNdx(sender))
     }
     
     @IBAction func clickAB1(sender: UIButton) {
+        hidePopover()
         state!.clickAB1(self)
     }
     @IBAction func clickAB2(sender: UIButton) {
+        hidePopover()
         state!.clickAB2(self)
     }
     
@@ -322,12 +375,18 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         super.prepareForSegue(segue, sender:sender)
         
         if segue.identifier == "showDialog" {
+            segue.destinationViewController.popoverPresentationController!.passthroughViews = [card0,card1,card2,card3,actionButton1,actionButton2]
             segue.destinationViewController.popoverPresentationController?.sourceRect = portraitButton.frame
             if let tvc = segue.destinationViewController as? DialogViewController {
                 if let ppc = tvc.popoverPresentationController {
                     ppc.delegate = self
                 }
                 tvc.text = tutorialText
+            }
+        } else if segue.identifier == "showLoss" || segue.identifier == "showWin" {
+            if let rvc = segue.destinationViewController as? ResultViewController {
+                rvc.lScore = game.players[.Left]!.score
+                rvc.rScore = game.players[.Right]!.score
             }
         }
     }
