@@ -71,8 +71,7 @@ enum UIState {
         case .MemorizeFirst:
             for i in 0..<4 {
                 c.showHandCard(i)
-                c.raiseHandCard(i)
-                c.showOppHandCard(i)
+                c.raiseHandCard(i) 
                 c.raiseOppHandCard(i)
                 c.pModel.storeModelCard(c.game.players[.Right]!.hand[i], ndx:i)
             }
@@ -362,7 +361,9 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     func hidePopover() {
-        if self.presentedViewController != nil {
+        let pvc = self.presentedViewController
+        //TODO: There's probably still a race condition here...
+        if pvc != nil && !pvc!.isBeingDismissed() {
             dismissViewControllerAnimated(true, completion: nil)
         }
     }
