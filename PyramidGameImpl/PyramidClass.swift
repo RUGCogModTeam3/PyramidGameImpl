@@ -7,8 +7,8 @@ class PyramidClass: Model {
     let forgetRate = 5
     
     init(game: PyramidGame){
-        super.init()
         self.game = game
+        super.init()
         for i in 1...13{
             let count = generateNewChunk("count")
             count.setSlot("isa", value: "cardcount")
@@ -87,8 +87,11 @@ class PyramidClass: Model {
             if (bluffChunk.slotTextValue("didbluff")! == "true"){
                 return makeBluffCallChoice(65)
             }
-            return makeBluffCallChoice(50)
+            return makeBluffCallChoice(35)
         }
+        
+        //TODO
+        return makeBluffCallChoice(50)
     }
     
     func makeChoice(bluffProbability: Int)-> Int?{
@@ -108,7 +111,6 @@ class PyramidClass: Model {
     // What action will the model take?
     //func getPlay(lastRevealedCard: Card, modelScore: Int, playerScore: Int)->Int? {
     func getPlayCard(lastRevealedCard: Card)->Int? {
-        var play: Int?
         let rank = "\(lastRevealedCard.rank)"
         let bias = self.game.players[.Left]!.score-self.game.players[.Right]!.score
         if ((self.game.players[.Right]!.score-self.game.players[.Left]!.score)>self.game.pyramid.remainingNonBluffPoints()) {
@@ -143,7 +145,9 @@ class PyramidClass: Model {
     
     func getPlay(lastRevealedCard: Card)->Int?{
         let output = getPlayCard(lastRevealedCard)
-        self.forget(self.game.players[.Right]!.hand[output!].rank, ndx: output)
+        if let unwrappedOutput = output {
+            self.forget(self.game.players[.Right]!.hand[unwrappedOutput].rank, ndx: unwrappedOutput)
+        }
         return output
     }
     
@@ -178,11 +182,14 @@ class PyramidClass: Model {
         }
     }
     
-    func forget(rank: Int, ndx: Int?){
-        if (ndx != nil){
-            for (title, chunk) in self.dm.chunks{
-                if let playedcard = (chunk.slotvals["rank"]=="\(rank)") && ((chunk.slotvals["lower"]=="\(ndx!)")||(chunk.slotvals["upper"]=="\(ndx!)")){
-                    model.dm.chunks[title,_].2.references = max((model.dm.chunks[title,_].2.references-self.forgetRate),0)
+    func forget(rank: Int, ndx: Int){
+        for (_, chunk) in self.dm.chunks {
+            if chunk.slotTextValue("isa") == "modelcard" {
+                let chunkRank = chunk.slotTextValue("rank")!
+                let chunkLower = chunk.slotTextValue("lower")!
+                let chunkUpper = chunk.slotTextValue("upper")!
+                if chunkRank == "\(rank)" && (chunkLower == "\(ndx)" || chunkUpper == "\(ndx)") {
+                    chunk.references = max(chunk.references-self.forgetRate,0)
                 }
             }
         }
