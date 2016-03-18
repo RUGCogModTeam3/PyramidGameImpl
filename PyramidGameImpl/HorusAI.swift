@@ -10,11 +10,11 @@ class HorusAI: SekhmetAI {
         return "HorusFace"
     }
     
-    override func textInitRemember()->String { return "Hello. Remember these cards, if you can." }
-    override func textPlayerDoYouHaveA(cardName:String)->String { return "Hmm. Do you have a \(cardName)?" }
-    override func textPlayerSelectCard()->String { return "Choose your card." }
-    override func textPlayerCallBase()->String { return "That cannot be right. I believe you are bluffing." }
-    override func textPlayerCallCorrect(points:Int)->String { return "I was correct, as expected. I get \(points) points." }
+    override func textInitRemember()->String { return "Welcome challenger. Do try to remember the following cards." }
+    override func textPlayerDoYouHaveA(cardName:String)->String { return "well, are you holding a \(cardName)?" }
+    override func textPlayerSelectCard()->String { return "Pick the card. Surely you have not forgotten where it was." }
+    override func textPlayerCallBase()->String { return "I do not trust you! You are bluffing." }
+    override func textPlayerCallCorrect(points:Int)->String { return "The great Horos was right as always. I get \(points) points." }
     override func textPlayerCallIncorrect(points:Int)->String { return "You were telling the truth? Interesting. You get \(points) points." }
     override func textPlayerNoCall(points:Int)->String { return "I believe you. You get \(points) points." }
     override func textPlayerNewCard()->String { return "This is your new card. If you hope to beat me, I suggest you remember it well." }
