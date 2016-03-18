@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		29D482531C96E375000CF8A5 /* PyramidClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D482501C96E375000CF8A5 /* PyramidClass.swift */; };
+		29D482531C96E375000CF8A5 /* SekhmetAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D482501C96E375000CF8A5 /* SekhmetAI.swift */; };
+		AB1A815C1C9C6D7E00268170 /* OpponentSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1A815B1C9C6D7E00268170 /* OpponentSelectController.swift */; };
+		AB1A815E1C9C6EDE00268170 /* HorusAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1A815D1C9C6EDE00268170 /* HorusAI.swift */; };
+		AB1A81601C9C707B00268170 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB1A815F1C9C707B00268170 /* Assets.xcassets */; };
 		AB2DBB731C9B0EC3003869AD /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2DBB721C9B0EC3003869AD /* ResultViewController.swift */; };
 		AB8311E61C98399000768874 /* pyramid.actr in Resources */ = {isa = PBXBuildFile; fileRef = AB8311E51C98399000768874 /* pyramid.actr */; };
 		ABF55E251C9329D800E6CEE5 /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */; };
@@ -17,7 +20,6 @@
 		CF61BDC61C8D9F8E00CBA055 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF61BDC41C8D9F8E00CBA055 /* LaunchScreen.storyboard */; };
 		CF61BDD11C8D9F8E00CBA055 /* PyramidGameImplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDD01C8D9F8E00CBA055 /* PyramidGameImplTests.swift */; };
 		CF61BDDC1C8D9F8E00CBA055 /* PyramidGameImplUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDDB1C8D9F8E00CBA055 /* PyramidGameImplUITests.swift */; };
-		CF61BDEA1C8D9FB700CBA055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF61BDE91C8D9FB700CBA055 /* Assets.xcassets */; };
 		CF61BDEC1C8DA03A00CBA055 /* PyramidGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BDEB1C8DA03A00CBA055 /* PyramidGame.swift */; };
 		CF61BE161C8DA24C00CBA055 /* BufferAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE091C8DA24C00CBA055 /* BufferAction.swift */; };
 		CF61BE171C8DA24C00CBA055 /* BufferCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61BE0A1C8DA24C00CBA055 /* BufferCondition.swift */; };
@@ -53,7 +55,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		29D482501C96E375000CF8A5 /* PyramidClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyramidClass.swift; sourceTree = "<group>"; };
+		29D482501C96E375000CF8A5 /* SekhmetAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SekhmetAI.swift; sourceTree = "<group>"; };
+		AB1A815B1C9C6D7E00268170 /* OpponentSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentSelectController.swift; sourceTree = "<group>"; };
+		AB1A815D1C9C6EDE00268170 /* HorusAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorusAI.swift; sourceTree = "<group>"; };
+		AB1A815F1C9C707B00268170 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB2DBB721C9B0EC3003869AD /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		AB8311E51C98399000768874 /* pyramid.actr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pyramid.actr; sourceTree = "<group>"; };
 		ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
@@ -69,7 +74,6 @@
 		CF61BDD71C8D9F8E00CBA055 /* PyramidGameImplUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PyramidGameImplUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF61BDDB1C8D9F8E00CBA055 /* PyramidGameImplUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyramidGameImplUITests.swift; sourceTree = "<group>"; };
 		CF61BDDD1C8D9F8E00CBA055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CF61BDE91C8D9FB700CBA055 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF61BDEB1C8DA03A00CBA055 /* PyramidGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyramidGame.swift; sourceTree = "<group>"; };
 		CF61BE091C8DA24C00CBA055 /* BufferAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferAction.swift; path = "Act-R/BufferAction.swift"; sourceTree = "<group>"; };
 		CF61BE0A1C8DA24C00CBA055 /* BufferCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BufferCondition.swift; path = "Act-R/BufferCondition.swift"; sourceTree = "<group>"; };
@@ -146,14 +150,16 @@
 				A058A7051C981BFE0090E5AE /* Models */,
 				CF61BE081C8DA21000CBA055 /* Act-R */,
 				CF61BDBB1C8D9F8E00CBA055 /* AppDelegate.swift */,
-				CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */,
+				ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */,
 				CF61BDBF1C8D9F8E00CBA055 /* Main.storyboard */,
 				AB2DBB721C9B0EC3003869AD /* ResultViewController.swift */,
-				ABF55E241C9329D800E6CEE5 /* DialogViewController.swift */,
-				CF61BDE91C8D9FB700CBA055 /* Assets.xcassets */,
+				AB1A815B1C9C6D7E00268170 /* OpponentSelectController.swift */,
+				29D482501C96E375000CF8A5 /* SekhmetAI.swift */,
+				AB1A815F1C9C707B00268170 /* Assets.xcassets */,
+				AB1A815D1C9C6EDE00268170 /* HorusAI.swift */,
 				CF61BDEB1C8DA03A00CBA055 /* PyramidGame.swift */,
-				29D482501C96E375000CF8A5 /* PyramidClass.swift */,
 				CF61BE231C8DC67300CBA055 /* PyramidModel.swift */,
+				CF61BDBD1C8D9F8E00CBA055 /* PyramidViewController.swift */,
 				CF61BDC41C8D9F8E00CBA055 /* LaunchScreen.storyboard */,
 				CF61BDC71C8D9F8E00CBA055 /* Info.plist */,
 			);
@@ -304,8 +310,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF61BDC61C8D9F8E00CBA055 /* LaunchScreen.storyboard in Resources */,
-				CF61BDEA1C8D9FB700CBA055 /* Assets.xcassets in Resources */,
 				AB8311E61C98399000768874 /* pyramid.actr in Resources */,
+				AB1A81601C9C707B00268170 /* Assets.xcassets in Resources */,
 				CF61BDC11C8D9F8E00CBA055 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB1A815C1C9C6D7E00268170 /* OpponentSelectController.swift in Sources */,
 				CF61BE1B1C8DA24C00CBA055 /* Model.swift in Sources */,
 				CF61BE1F1C8DA24C00CBA055 /* SlotAction.swift in Sources */,
 				CF61BE191C8DA24C00CBA055 /* Declarative.swift in Sources */,
@@ -345,8 +352,9 @@
 				CF61BE161C8DA24C00CBA055 /* BufferAction.swift in Sources */,
 				CF61BDBE1C8D9F8E00CBA055 /* PyramidViewController.swift in Sources */,
 				CF61BE211C8DA24C00CBA055 /* Support.swift in Sources */,
-				29D482531C96E375000CF8A5 /* PyramidClass.swift in Sources */,
+				29D482531C96E375000CF8A5 /* SekhmetAI.swift in Sources */,
 				AB2DBB731C9B0EC3003869AD /* ResultViewController.swift in Sources */,
+				AB1A815E1C9C6EDE00268170 /* HorusAI.swift in Sources */,
 				ABF55E251C9329D800E6CEE5 /* DialogViewController.swift in Sources */,
 				CF61BE1D1C8DA24C00CBA055 /* Procedural.swift in Sources */,
 				CF61BDBC1C8D9F8E00CBA055 /* AppDelegate.swift in Sources */,

@@ -1,7 +1,7 @@
 
 import Foundation
 
-class PyramidClass: Model {
+class SekhmetAI: Model, PyramidAI {
     var cardCount = [Int](count:13, repeatedValue: 0)
     let game: PyramidGame
     let forgetRate = 5
@@ -18,8 +18,8 @@ class PyramidClass: Model {
         }
     }
     
-    // Store a card in the model's hand. Automatically calls storeCard (see below)
-    func storeModelCard(card: Card, ndx: Int){
+    // observe a card in the model's hand. Automatically calls observeCard (see below)
+    func observeHandCard(card: Card, ndx: Int){
         print(card.rank, ndx)
         for i in -1...1{
             let upper = max(ndx,(ndx+i))
@@ -32,11 +32,11 @@ class PyramidClass: Model {
             self.dm.addToDM(cardlocation)
             self.dm.addToDM(cardlocation)
         }
-        storeCard(card)
+        observeCard(card)
     }
     
-    // Store any card seen in the game
-    func storeCard(card: Card){
+    // observe any card seen in the game
+    func observeCard(card: Card){
         //let cardchunk = generateNewChunk("card") //Is there a reason we do this
         //cardchunk.setSlot("isa", value: "card")
         //cardchunk.setSlot("rank",value: "\(card.rank)")
@@ -50,7 +50,7 @@ class PyramidClass: Model {
     }
     
     // Record if the player did bluff
-    func storePlayerBluff(choice: Bool){
+    func observePlayerBluff(choice: Bool){
         let cardchunk = generateNewChunk("playerbluff")
         cardchunk.setSlot("isa", value: "playerbluff")
         cardchunk.setSlot("didbluff", value: "\(choice)")
@@ -58,7 +58,7 @@ class PyramidClass: Model {
     }
     
     // Record if the player calls a bluff
-    func storePlayerBluffCall(choice: Bool) {
+    func observePlayerBluffCall(choice: Bool) {
         let cardchunk = generateNewChunk("modelbluff")
         cardchunk.setSlot("isa", value: "playercalledbluff")
         cardchunk.setSlot("called", value: "\(choice)")
@@ -143,7 +143,7 @@ class PyramidClass: Model {
         }
     }
     
-    func getPlay(lastRevealedCard: Card)->Int?{
+    func getPlay(lastRevealedCard: Card)->Int? {
         let output = getPlayCard(lastRevealedCard)
         if let unwrappedOutput = output {
             self.forget(self.game.players[.Right]!.hand[unwrappedOutput].rank, ndx: unwrappedOutput)
@@ -194,6 +194,30 @@ class PyramidClass: Model {
             }
         }
     }
+    
+    
+    func name()->String {
+        return "Sekhmet"
+    }
+    
+    func iconName()->String {
+        return "SekhmetFace"
+    }
+    
+    func textInitRemember()->String { return "Welcome mortal! Remember your cards well..." }
+    func textPlayerDoYouHaveA(cardName:String)->String { return "Well, human, do you have a \(cardName)?" }
+    func textPlayerSelectCard()->String { return "Select your card, mortal." }
+    func textPlayerCallBase()->String { return "Show me your card! I believe you are bluffing..." }
+    func textPlayerCallCorrect(points:Int)->String { return "I was right! I get \(points) points." }
+    func textPlayerCallIncorrect(points:Int)->String { return "But you were telling the truth! You get \(points) points." }
+    func textPlayerNoCall(points:Int)->String { return "I trust you are not bluffing... for now. You get \(points) points." }
+    func textPlayerNewCard()->String { return "This is your new card, mortal. Remember it well." }
+    func textAIPass(cardName:String)->String { return "It is now my turn... but I don't have a \(cardName)." }
+    func textAIPlay(cardName:String)->String { return "It is now my turn! I do have a \(cardName).\n\nDo you think I am bluffing?" }
+    func textAICallCorrect(points:Int)->String { return "No, you caught me in my lie! You get \(points) points." }
+    func textAICallIncorrect(points:Int)->String { return "Ha! I was telling the truth! I get \(points) points." }
+    func textAINoCall(points:Int)->String { return "Very well, mortal. I get \(points) points." }
+    func textAINewCard()->String { return "Now I get a new card." }
 }
 
 extension Chunk {

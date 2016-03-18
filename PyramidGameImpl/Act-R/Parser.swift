@@ -183,9 +183,9 @@ class Parser  {
 
     
     private func parseSlotAction() -> SlotAction? {
-        var op: String? = nil
+        //var op: String? = nil
         if (t.token == "-" || t.token == "<" || t.token == ">" || t.token == "<=" || t.token == ">=") {
-            op = t.token
+            //op = t.token
             t.nextToken()
         }
         let slot = t.token

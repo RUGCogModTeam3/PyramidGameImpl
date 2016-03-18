@@ -11,7 +11,7 @@ import UIKit
 
 
 enum UIState {
-    case MemorizeFirst, HumanYesNo, HumanSelect, HumanBS(ndx:Int), HumanNewCard(ndx:Int), ModelSelect, ModelPass, ModelBS(ndx:Int), ModelPostBS(ndx:Int, call:Bool);
+    case MemorizeFirst, HumanYesNo, HumanSelect, HumanBS(ndx:Int), HumanNewCard(ndx:Int), ModelSelect, ModelPass, ModelBS(ndx:Int), ModelPostBS(ndx:Int, call:Bool), Finished;
     
     func clickAB1(c:PyramidViewController) {
         switch self {
@@ -38,6 +38,8 @@ enum UIState {
         case .ModelPostBS:
             c.state = .HumanYesNo
             
+        case .Finished:
+            c.state = .Finished
         default: break
         }
     }
@@ -73,65 +75,64 @@ enum UIState {
                 c.showHandCard(i)
                 c.raiseHandCard(i) 
                 c.raiseOppHandCard(i)
-                c.pModel.storeModelCard(c.game.players[.Right]!.hand[i], ndx:i)
+                c.opponent.observeHandCard(c.game.players[.Right]!.hand[i], ndx:i)
             }
             c.setABTitles("Next", nil)
-            c.tutorialText = "Welcome mortal! Remember your cards well..."
+            c.tutorialText = c.opponent.textInitRemember()
             
         case .HumanYesNo:
-            for i in 0..<4 {
-                c.hideHandCard(i)
-                c.lowerHandCard(i)
-                c.hideOppHandCard(i)
-                c.lowerOppHandCard(i)
-            }
-            c.setABTitles("Yes/Bluff", "No")
-            
             if let nextCard = c.game.nextTurn() {
-                c.pModel.storeCard(nextCard)
+                for i in 0..<4 {
+                    c.hideHandCard(i)
+                    c.lowerHandCard(i)
+                    c.hideOppHandCard(i)
+                    c.lowerOppHandCard(i)
+                }
+                c.setABTitles("Yes/Bluff", "No")
+                c.opponent.observeCard(nextCard)
                 c.pcards.popLast()!.image = nextCard.image
-                c.tutorialText = "Well, human, do you have a \(nextCard.rankName)?"
+                c.tutorialText = c.opponent.textPlayerDoYouHaveA(nextCard.rankName)
             } else {
-                c.finishGame()
+                c.state = .Finished
             }
             
         case .HumanSelect:
             c.setABTitles(nil, nil)
-            c.tutorialText = "Select your card, mortal."
+            c.tutorialText = c.opponent.textPlayerSelectCard()
             
         case let .HumanBS(ndx):
             let lPreScore = c.game.players[.Left]!.score
             let rPreScore = c.game.players[.Right]!.score
             c.setABTitles("Next", nil)
-            let callBS = c.pModel.callBullshit(c.game.pyramid.getLastFlippedCard())
-            var bsText = ""
+            let callBS = c.opponent.callBullshit(c.game.pyramid.getLastFlippedCard())
+            var baseText = ""
             if callBS {
-                bsText = "Show me your card! I believe you are bluffing...\n\n"
+                baseText = c.opponent.textPlayerCallBase()+"\n\n"
                 c.showHandCard(ndx)
-                c.pModel.storeCard(c.game.players[.Left]!.hand[ndx])
+                c.opponent.observeCard(c.game.players[.Left]!.hand[ndx])
                 c.game.callBullshit(.Left, call:callBS)
                 let lDiff = c.game.players[.Left]!.score - lPreScore
                 let rDiff = c.game.players[.Right]!.score - rPreScore
                 if lDiff > 0 {
-                    c.pModel.storePlayerBluff(false)
-                    bsText = bsText + "But you were telling the truth! You get \(lDiff) points."
+                    c.opponent.observePlayerBluff(false)
+                    baseText = baseText + c.opponent.textPlayerCallIncorrect(lDiff)
                 } else {
-                    c.pModel.storePlayerBluff(true)
-                    bsText = bsText + "I was right! I get \(rDiff) points."
+                    c.opponent.observePlayerBluff(true)
+                    baseText = baseText + c.opponent.textPlayerCallCorrect(rDiff)
                 }
             } else {
-                bsText = "I trust you are not bluffing... for now. You get \(c.game.pyramid.rowValue()) points."
+                baseText = c.opponent.textPlayerNoCall(c.game.pyramid.rowValue())
                 c.game.callBullshit(.Left, call:callBS)
             }
-            c.tutorialText = bsText
+            c.tutorialText = baseText
             
         case let .HumanNewCard(ndx):
             c.setABTitles("Next", nil)
-            c.tutorialText = "This is your new card, mortal. Remember it well."
+            c.tutorialText = c.opponent.textPlayerNewCard()
             c.showHandCard(ndx)
             
         case .ModelSelect:
-            let choice = c.pModel.getPlay(c.game.pyramid.getLastFlippedCard())
+            let choice = c.opponent.getPlay(c.game.pyramid.getLastFlippedCard())
     
             c.game.selectCard(.Right, ndx: choice)
             if let ndx = choice {
@@ -142,11 +143,11 @@ enum UIState {
         
         case .ModelPass:
             c.setABTitles("Next", nil)
-            c.tutorialText = "It is now my turn... but I don't have a \(c.game.pyramid.getLastFlippedCard().rankName)."
+            c.tutorialText = c.opponent.textAIPass(c.game.pyramid.getLastFlippedCard().rankName)
             
         case let .ModelBS(ndx):
             c.setABTitles("Yes", "No")
-            c.tutorialText = "It is now my turn! I do have a \(c.game.pyramid.getLastFlippedCard().rankName).\n\nDo you think I am bluffing?"
+            c.tutorialText = c.opponent.textAIPlay(c.game.pyramid.getLastFlippedCard().rankName)
             c.raiseOppHandCard(ndx)
             
         case let .ModelPostBS(ndx, call):
@@ -156,22 +157,26 @@ enum UIState {
                 c.showOppHandCard(ndx)
             }
             c.game.callBullshit(.Right, call:call)
-            c.pModel.storeModelCard(c.game.players[.Right]!.hand[ndx], ndx:ndx)
-            c.pModel.storePlayerBluffCall(call)
+            c.opponent.observeHandCard(c.game.players[.Right]!.hand[ndx], ndx:ndx)
+            c.opponent.observePlayerBluffCall(call)
             c.setABTitles("Next", nil)
             var textBase = ""
             if call {
                 let lDiff = c.game.players[.Left]!.score - lPreScore
                 let rDiff = c.game.players[.Right]!.score - rPreScore
                 if lDiff > 0 {
-                    textBase = "No, you caught me in my lie! You get \(lDiff) points."
+                    textBase = c.opponent.textAICallCorrect(lDiff)
                 } else {
-                    textBase = "Ha! I was telling the truth! I get \(rDiff) points."
+                    textBase = c.opponent.textAICallIncorrect(rDiff)
                 }
             } else {
-                textBase = "Very well, mortal. I get \(c.game.pyramid.rowValue()) points."
+                textBase = c.opponent.textAINoCall(c.game.pyramid.rowValue())
             }
-            c.tutorialText = textBase + "\n\nNow I get a new card."
+            c.tutorialText = textBase + "\n\n" + c.opponent.textAINewCard()
+            
+        case .Finished:
+            c.finishGame()
+            c.setABTitles("Continue", nil)
         }
         c.lscore.setTitle("\(c.game.players[.Left]!.score)", forState: .Normal)
         c.rscore.setTitle("\(c.game.players[.Right]!.score)", forState: .Normal)
@@ -180,18 +185,8 @@ enum UIState {
 
 class PyramidViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     //Initialize a pyramidmodel and load the right model. Not sure why it gives a warning though
-	var game = PyramidGame(numRanks:13, numSuits:4, pyramidRows:4, handSize:4)
-    let pModel: PyramidClass
-    
-    init() {
-        pModel = PyramidClass(game:self.game)
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        pModel = PyramidClass(game:self.game)
-        super.init(coder: aDecoder)
-    }
+    var game: PyramidGame!
+    var opponent: PyramidAI!
     
     
     @IBOutlet weak var card0: UIButton!
@@ -233,6 +228,9 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBOutlet weak var oppCard2TopConstraint: NSLayoutConstraint!
     @IBOutlet weak var oppCard3TopConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var oppLabel: UILabel!
+    @IBOutlet weak var oppFace: UIImageView!
+    
     var cards = [UIButton!]()
     var cardConstraints = [NSLayoutConstraint!]()
     var oppcards = [UIImageView!]()
@@ -242,10 +240,13 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     var tutorialText: String! = nil {
         didSet {
             if let text = tutorialText {
+                let c = self
                 tutorialTextView.text = text
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.performSegueWithIdentifier("showDialog", sender: self)
-                })
+                dispatch_async(dispatch_get_main_queue()) {
+                    c.delayUntil({ return c.presentedViewController == nil }) {
+                        c.performSegueWithIdentifier("showDialog", sender: c)
+                    }
+                }
             }
         }
     }
@@ -253,7 +254,7 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     var state: UIState? {
         didSet {
             if let unwrappedState = state {
-                pModel.observeState(unwrappedState)
+                opponent.observeState(unwrappedState)
                 unwrappedState.setup(self)
             }
         }
@@ -261,6 +262,7 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("pvc viewDidLoad")
         cards.append(card0)
         cards.append(card1)
         cards.append(card2)
@@ -287,6 +289,9 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         oppcardConstraints.append(oppCard1TopConstraint)
         oppcardConstraints.append(oppCard2TopConstraint)
         oppcardConstraints.append(oppCard3TopConstraint)
+        
+        oppFace.image = UIImage(named: opponent.iconName())
+        oppLabel.text = opponent.name()
         
         state = .MemorizeFirst
     }
@@ -350,21 +355,33 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         }
     }
     
-    func finishGame() {
-        let lScore = game.players[.Left]!.score
-        let rScore = game.players[.Right]!.score
-        if lScore >= rScore {
-            performSegueWithIdentifier("showWin", sender: self)
+    func delayUntil(condition:()->Bool,_ action:()->Void) {
+        let c = self
+        if !condition() {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_MSEC)),dispatch_get_main_queue(), { c.delayUntil(condition, action)})
         } else {
-            performSegueWithIdentifier("showLoss", sender: self)
+            action()
+        }
+    }
+    
+    func finishGame() {
+        let c = self
+        delayUntil({ return c.presentedViewController == nil }) {
+            let lScore = c.game.players[.Left]!.score
+            let rScore = c.game.players[.Right]!.score
+            if lScore >= rScore {
+                c.performSegueWithIdentifier("showWin", sender: c)
+            } else {
+                c.performSegueWithIdentifier("showLoss", sender: c)
+            }
         }
     }
     
     func hidePopover() {
         let pvc = self.presentedViewController
         //TODO: There's probably still a race condition here...
-        if pvc != nil && !pvc!.isBeingDismissed() {
-            dismissViewControllerAnimated(true, completion: nil)
+        if pvc != nil {
+            pvc!.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
