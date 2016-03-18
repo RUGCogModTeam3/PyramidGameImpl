@@ -3,9 +3,12 @@ import Foundation
 
 class PyramidClass: Model {
     var cardCount = [Int](count:13, repeatedValue: 0)
+    let game: PyramidGame
+    let forgetRate = 5
     
-    override init(){
+    init(game: PyramidGame){
         super.init()
+        self.game = game
         for i in 1...13{
             let count = generateNewChunk("count")
             count.setSlot("isa", value: "cardcount")
@@ -64,17 +67,27 @@ class PyramidClass: Model {
     
     // Does the model call bullshit on the player?
     func callBullshit(lastRevealedCard: Card) -> Bool {
+        if ((self.game.players[.Right]!.score-self.game.players[.Left]!.score)>self.game.pyramid.remainingNonBluffPoints()) {
+            return false
+        }
         let rank = "\(lastRevealedCard.rank)"
         if let cardChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
             if cardChunk.slotTextValue("counts")! == "high" {
-                return true
+                if let bluffChunk = self.retrieve(["isa":"playerbluff"]) {
+                    if (bluffChunk.slotTextValue("didbluff")! == "true"){
+                        return makeBluffCallChoice(80)
+                    }
+                    return makeBluffCallChoice(60)
+                }
+                return makeBluffCallChoice(65)
             }
         }
         
         if let bluffChunk = self.retrieve(["isa":"playerbluff"]) {
-            return bluffChunk.slotTextValue("didbluff")! == "true"
-        } else {
-            return true
+            if (bluffChunk.slotTextValue("didbluff")! == "true"){
+                return makeBluffCallChoice(65)
+            }
+            return makeBluffCallChoice(50)
         }
     }
     
@@ -85,35 +98,53 @@ class PyramidClass: Model {
         return nil
     }
     
+    func makeBluffCallChoice(bluffProbability: Int)-> Bool{
+        if(Int(arc4random_uniform(100))<bluffProbability){
+            return true
+        }
+        return false
+    }
+    
     // What action will the model take?
     //func getPlay(lastRevealedCard: Card, modelScore: Int, playerScore: Int)->Int? {
-    func getPlay(lastRevealedCard: Card)->Int? {
+    func getPlayCard(lastRevealedCard: Card)->Int? {
+        var play: Int?
         let rank = "\(lastRevealedCard.rank)"
+        let bias = self.game.players[.Left]!.score-self.game.players[.Right]!.score
+        if ((self.game.players[.Right]!.score-self.game.players[.Left]!.score)>self.game.pyramid.remainingNonBluffPoints()) {
+            return nil
+        }
         if let cardChunk = self.retrieve(["isa":"modelcard","rank":rank]) {
             let lower = max(Int(cardChunk.slotTextValue("lower")!)!, 0)
             let upper = min(Int(cardChunk.slotTextValue("upper")!)!,3)
             let play = (lower+Int(arc4random_uniform(UInt32(1+upper-lower))))
             print("getPlay lower:\(lower) upper:\(upper) play:\(play)")
             return play
-        } //else if(modelScore-playerScore>minPoints){
-           // return nil
-        //}
-        else{
-            if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
-                if countChunk.slotTextValue("counts")! == "high" {
-                    return makeChoice(25)
-                }
-            }
-            if let bluffChunk = self.retrieve(["isa":"playercalledbluff"]) {
-                if bluffChunk.slotTextValue("called")! == "true" {
-                    return makeChoice(35)
-                } else {
-                    return makeChoice(80)
-                }
-            } else {
-                return makeChoice(50)
+        }
+        if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
+            if countChunk.slotTextValue("counts")! == "high" {
+                let play = makeChoice(25+bias)
+                return play
             }
         }
+        if let bluffChunk = self.retrieve(["isa":"playercalledbluff"]) {
+            if bluffChunk.slotTextValue("called")! == "true" {
+                let play = makeChoice(35+bias)
+                return play
+            } else {
+                let play = makeChoice(80+bias)
+                return play
+            }
+        } else {
+            let play = makeChoice(50+bias)
+            return play
+        }
+    }
+    
+    func getPlay(lastRevealedCard: Card)->Int?{
+        let output = getPlayCard(lastRevealedCard)
+        self.forget(self.game.players[.Right]!.hand[output!].rank, ndx: output)
+        return output
     }
     
     func retrieve(slots:[String:String])->Chunk? {
@@ -144,6 +175,16 @@ class PyramidClass: Model {
         }
         if let chunk = self.retrieve(["isa":"modelcard", "upper":"\(ndx)"]) {
             self.dm.addToDM(chunk)
+        }
+    }
+    
+    func forget(rank: Int, ndx: Int?){
+        if (ndx != nil){
+            for (title, chunk) in self.dm.chunks{
+                if let playedcard = (chunk.slotvals["rank"]=="\(rank)") && ((chunk.slotvals["lower"]=="\(ndx!)")||(chunk.slotvals["upper"]=="\(ndx!)")){
+                    model.dm.chunks[title,_].2.references = max((model.dm.chunks[title,_].2.references-self.forgetRate),0)
+                }
+            }
         }
     }
 }

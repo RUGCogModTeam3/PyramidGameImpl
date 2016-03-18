@@ -181,9 +181,9 @@ enum UIState {
 
 class PyramidViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     //Initialize a pyramidmodel and load the right model. Not sure why it gives a warning though
-	var pModel = PyramidClass()
+	var game = PyramidGame(numRanks:13, numSuits:4, pyramidRows:4, handSize:4)
+    var pModel = PyramidClass(game)
     
-    var game = PyramidGame(numRanks:13, numSuits:4, pyramidRows:4, handSize:4)
     
     @IBOutlet weak var card0: UIButton!
     @IBOutlet weak var card1: UIButton!
