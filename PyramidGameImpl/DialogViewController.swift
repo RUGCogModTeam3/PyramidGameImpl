@@ -27,7 +27,7 @@ class DialogViewController: UIViewController {
             if textView != nil && presentingViewController != nil {
                 var size = textView.sizeThatFits(presentingViewController!.view.bounds.size)
                 size.width += 24
-                size.height += 6
+                size.height += 16
                 return size
             }
             return super.preferredContentSize
