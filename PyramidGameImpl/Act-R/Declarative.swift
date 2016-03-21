@@ -97,12 +97,8 @@ class Declarative  {
             }
         }
         if bestActivation > retrievalThreshold {
-                        print("Activation of chunk \(bestMatch?.slotTextValue("rank")): \(bestActivation)")
             return (latency(bestActivation) , bestMatch)
         } else {
-            if bestMatch != nil {
-                print("Had chunk, but forgot")
-            }
             retrieveError = true
             return (latency(retrievalThreshold), nil)
         }

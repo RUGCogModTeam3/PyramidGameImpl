@@ -4,9 +4,9 @@ import Foundation
 class SekhmetAI: Model, PyramidAI {
     var cardCount = [Int](count:13, repeatedValue: 0)
     let game: PyramidGame
-    let forgetActivation = 0.25
+    var forgetActivation = -2.0
     var difficulty = "easy"
-    var bluffProbabilities = [0,25,35,70,50]
+    var bluffProbabilities = [10,35,35,70,60]
     var didLastBluff = false
     
     init(game: PyramidGame){
@@ -41,10 +41,6 @@ class SekhmetAI: Model, PyramidAI {
     
     // observe any card seen in the game
     func observeCard(card: Card){
-        //let cardchunk = generateNewChunk("card") //Is there a reason we do this
-        //cardchunk.setSlot("isa", value: "card")
-        //cardchunk.setSlot("rank",value: "\(card.rank)")
-        //self.dm.addToDM(cardchunk)
         cardCount[card.rank-1]+=1
         let count = generateNewChunk("count")
         count.setSlot("isa", value: "cardcount")
