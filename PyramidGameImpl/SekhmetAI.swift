@@ -4,11 +4,15 @@ import Foundation
 class SekhmetAI: Model, PyramidAI {
     var cardCount = [Int](count:13, repeatedValue: 0)
     let game: PyramidGame
-    let forgetRate = 5
+    let forgetActivation = 0.25
+    var difficulty = "easy"
+    var bluffProbabilities = [0,25,35,70,50]
+    var didLastBluff = false
     
     init(game: PyramidGame){
         self.game = game
         super.init()
+        self.dm.baseLevelDecay = 0.7
         for i in 1...13{
             let count = generateNewChunk("count")
             count.setSlot("isa", value: "cardcount")
@@ -67,6 +71,7 @@ class SekhmetAI: Model, PyramidAI {
     
     // Does the model call bullshit on the player?
     func callBullshit(lastRevealedCard: Card) -> Bool {
+        let bias = self.game.players[.Left]!.score-self.game.players[.Right]!.score
         if ((self.game.players[.Right]!.score-self.game.players[.Left]!.score)>self.game.pyramid.remainingNonBluffPoints()) {
             return false
         }
@@ -75,23 +80,24 @@ class SekhmetAI: Model, PyramidAI {
             if cardChunk.slotTextValue("counts")! == "high" {
                 if let bluffChunk = self.retrieve(["isa":"playerbluff"]) {
                     if (bluffChunk.slotTextValue("didbluff")! == "true"){
-                        return makeBluffCallChoice(80)
+                        return makeBluffCallChoice(70+bias)
                     }
-                    return makeBluffCallChoice(60)
+                    return makeBluffCallChoice(60+bias)
                 }
-                return makeBluffCallChoice(65)
+                return makeBluffCallChoice(65+bias)
             }
+            return makeBluffCallChoice(35+bias)
         }
         
         if let bluffChunk = self.retrieve(["isa":"playerbluff"]) {
             if (bluffChunk.slotTextValue("didbluff")! == "true"){
-                return makeBluffCallChoice(65)
+                return makeBluffCallChoice(60+bias)
             }
-            return makeBluffCallChoice(35)
+            return makeBluffCallChoice(35+bias)
         }
         
         //TODO
-        return makeBluffCallChoice(50)
+        return makeBluffCallChoice(50+bias)
     }
     
     func makeChoice(bluffProbability: Int)-> Int?{
@@ -111,34 +117,39 @@ class SekhmetAI: Model, PyramidAI {
     // What action will the model take?
     //func getPlay(lastRevealedCard: Card, modelScore: Int, playerScore: Int)->Int? {
     func getPlayCard(lastRevealedCard: Card)->Int? {
+        let probabilities = bluffProbabilities
         let rank = "\(lastRevealedCard.rank)"
         let bias = self.game.players[.Left]!.score-self.game.players[.Right]!.score
+        didLastBluff = true
+        
         if ((self.game.players[.Right]!.score-self.game.players[.Left]!.score)>self.game.pyramid.remainingNonBluffPoints()) {
-            return nil
+            let play = makeChoice(probabilities[0]+bias)
+            return play
         }
         if let cardChunk = self.retrieve(["isa":"modelcard","rank":rank]) {
             let lower = max(Int(cardChunk.slotTextValue("lower")!)!, 0)
             let upper = min(Int(cardChunk.slotTextValue("upper")!)!,3)
             let play = (lower+Int(arc4random_uniform(UInt32(1+upper-lower))))
             print("getPlay lower:\(lower) upper:\(upper) play:\(play)")
+            didLastBluff = false
             return play
         }
         if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
             if countChunk.slotTextValue("counts")! == "high" {
-                let play = makeChoice(25+bias)
+                let play = makeChoice(probabilities[1]+bias)
                 return play
             }
         }
         if let bluffChunk = self.retrieve(["isa":"playercalledbluff"]) {
             if bluffChunk.slotTextValue("called")! == "true" {
-                let play = makeChoice(35+bias)
+                let play = makeChoice(probabilities[2]+bias)
                 return play
             } else {
-                let play = makeChoice(80+bias)
+                let play = makeChoice(probabilities[3]+bias)
                 return play
             }
         } else {
-            let play = makeChoice(50+bias)
+            let play = makeChoice(probabilities[4]+bias)
             return play
         }
     }
@@ -189,7 +200,8 @@ class SekhmetAI: Model, PyramidAI {
                 let chunkLower = chunk.slotTextValue("lower")!
                 let chunkUpper = chunk.slotTextValue("upper")!
                 if chunkRank == "\(rank)" && (chunkLower == "\(ndx)" || chunkUpper == "\(ndx)") {
-                    chunk.references = max(chunk.references-self.forgetRate,0)
+                    //chunk.references = max(chunk.references-self.forgetRate,0)
+                    chunk.fixedActivation = forgetActivation
                 }
             }
         }
@@ -214,7 +226,9 @@ class SekhmetAI: Model, PyramidAI {
     func textPlayerNewCard()->String { return "This is your new card, mortal. Remember it well." }
     func textAIPass(cardName:String)->String { return "It is now my turn... but I don't have a \(cardName)." }
     func textAIPlay(cardName:String)->String { return "It is now my turn! I do have a \(cardName).\n\nDo you think I am bluffing?" }
-    func textAICallCorrect(points:Int)->String { return "No, you caught me in my lie! You get \(points) points." }
+    func textAICallCorrect(points:Int)->String { return didLastBluff ? textAICallCorrectBluff(points) : textAICallCorrectMistake(points)}
+    func textAICallCorrectBluff(points:Int)->String { return "No, you caught me in my lie! You get \(points) points." }
+    func textAICallCorrectMistake(points:Int)->String { return "What? I thought I had that card... You get \(points) points." }
     func textAICallIncorrect(points:Int)->String { return "Ha! I was telling the truth! I get \(points) points." }
     func textAINoCall(points:Int)->String { return "Very well, mortal. I get \(points) points." }
     func textAINewCard()->String { return "Now I get a new card." }
