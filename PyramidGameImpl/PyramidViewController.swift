@@ -356,23 +356,21 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     func delayUntil(condition:()->Bool,_ action:()->Void) {
-        let c = self
         if !condition() {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_MSEC)),dispatch_get_main_queue(), { c.delayUntil(condition, action)})
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(NSEC_PER_MSEC)),dispatch_get_main_queue(), { self.delayUntil(condition, action)})
         } else {
             action()
         }
     }
     
     func finishGame() {
-        let c = self
-        delayUntil({ return c.presentedViewController == nil }) {
-            let lScore = c.game.players[.Left]!.score
-            let rScore = c.game.players[.Right]!.score
+        delayUntil({ return self.presentedViewController == nil }) {
+            let lScore = self.game.players[.Left]!.score
+            let rScore = self.game.players[.Right]!.score
             if lScore >= rScore {
-                c.performSegueWithIdentifier("showWin", sender: c)
+                self.performSegueWithIdentifier("showWin", sender: self)
             } else {
-                c.performSegueWithIdentifier("showLoss", sender: c)
+                self.performSegueWithIdentifier("showLoss", sender: self)
             }
         }
     }
