@@ -187,6 +187,8 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     //Initialize a pyramidmodel and load the right model. Not sure why it gives a warning though
     var game: PyramidGame!
     var opponent: PyramidAI!
+    let animationDuration = 0.75
+    let cardOffset:CGFloat = 32
     
     
     @IBOutlet weak var card0: UIButton!
@@ -262,7 +264,6 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("pvc viewDidLoad")
         cards.append(card0)
         cards.append(card1)
         cards.append(card2)
@@ -293,29 +294,50 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         oppFace.image = UIImage(named: opponent.iconName())
         oppLabel.text = opponent.name()
         
+        for constraint in cardConstraints {
+            constraint.constant = 8
+        }
+        
         state = .MemorizeFirst
     }
     
     func showHandCard(ndx:Int) {
         let playerCard = game.players[.Left]!.hand[ndx]
-        cards[ndx].setBackgroundImage(playerCard.image, forState: .Normal)
+        let cardView = cards[ndx]
+        UIView.transitionWithView(cardView, duration: animationDuration, options: .TransitionFlipFromLeft, animations: { cardView.setBackgroundImage(playerCard.image, forState: .Normal) }, completion: {print("Finished showHandCard animation: \($0)") })
     }
     
     func hideHandCard(ndx:Int) {
-        cards[ndx].setBackgroundImage(UIImage(named:"CardBack"), forState: .Normal)
+        let cardView = cards[ndx]
+        UIView.transitionWithView(cardView, duration: animationDuration, options: .TransitionFlipFromRight, animations: { cardView.setBackgroundImage(UIImage(named:"CardBack"), forState: .Normal) }, completion: {print("Finished showHandCard animation: \($0)") })
     }
     
     func raiseHandCard(ndx:Int) {
-        cardConstraints[ndx].constant = 8
+        //cardConstraints[ndx].constant = 8
+        let cardView = cards[ndx]
+        
+        UIView.animateWithDuration(animationDuration, animations: {
+            cardView.transform = CGAffineTransformMakeTranslation(0, 0)
+        })
     }
     
     func lowerHandCard(ndx:Int) {
-        cardConstraints[ndx].constant = 40
+        //cardConstraints[ndx].constant = 40
+        let cardView = cards[ndx]
+        
+        UIView.animateWithDuration(animationDuration, animations: {
+            cardView.transform = CGAffineTransformMakeTranslation(0, self.cardOffset)
+        })
+    }
+    
+    func replaceHandCard(ndx:Int) {
+        
     }
     
     func showOppHandCard(ndx:Int) {
         let playerCard = game.players[.Right]!.hand[ndx]
-        print("lHand:\(game.players[.Left]!.hand) rHand:\(game.players[.Right]!.hand)")
+        let cardView = oppcards[ndx]
+        UIView.transitionWithView(cardView, duration: 0.75, options: .TransitionFlipFromLeft, animations: { cardView.image = playerCard.image }, completion: {print("Finished showOppHandCard animation: \($0)") })
         oppcards[ndx].image = playerCard.image
     }
     
@@ -328,6 +350,10 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     }
     
     func lowerOppHandCard(ndx:Int) {
+        oppcardConstraints[ndx].constant = 40
+    }
+    
+    func replaceOppHandCard(ndx:Int) {
         oppcardConstraints[ndx].constant = 40
     }
     

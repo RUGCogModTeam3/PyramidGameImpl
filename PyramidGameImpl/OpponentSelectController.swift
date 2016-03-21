@@ -11,7 +11,6 @@ import UIKit
 class OpponentSelectController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        print("osc prepareForSegue identifier:\(segue.identifier)")
         print(segue.destinationViewController)
         if let pvc = segue.destinationViewController as? PyramidViewController {
             if let id = segue.identifier {
