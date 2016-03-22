@@ -51,10 +51,10 @@
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -81,40 +81,45 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CF61BDB71C8D9F8E00CBA055"
-            BuildableName = "PyramidGameImpl.app"
-            BlueprintName = "PyramidGameImpl"
-            ReferencedContainer = "container:PyramidGameImpl.xcodeproj">
+            BuildableName = "Pyramid Game.app"
+            BlueprintName = "Pyramid Game"
+            ReferencedContainer = "container:Pyramid Game.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CF61BDB71C8D9F8E00CBA055"
-            BuildableName = "PyramidGameImpl.app"
-            BlueprintName = "PyramidGameImpl"
-            ReferencedContainer = "container:PyramidGameImpl.xcodeproj">
+            BuildableName = "Pyramid Game.app"
+            BlueprintName = "Pyramid Game"
+            ReferencedContainer = "container:Pyramid Game.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CF61BDB71C8D9F8E00CBA055"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9qR-Ee-gE7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9qR-Ee-gE7">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -363,7 +363,7 @@ Card face art</string>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="External Assets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7e0-yp-9Ay">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -425,7 +425,7 @@ Thomas Derksen</string>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Team" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCE-yO-G8c">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xgg-uw-Vx2">
@@ -460,9 +460,9 @@ Opponent Modelling</string>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="7Tb-6M-upJ"/>
                                         <exclude reference="3ST-gY-bCl"/>
                                         <exclude reference="AnX-hJ-Wud"/>
+                                        <exclude reference="7Tb-6M-upJ"/>
                                         <exclude reference="4I6-RQ-xyR"/>
                                         <exclude reference="EDs-IT-gT9"/>
                                     </mask>
@@ -1013,13 +1013,13 @@ Difficulty: Normal</string>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardback2v2" translatesAutoresizingMaskIntoConstraints="NO" id="GVy-sU-4oM">
                                         <rect key="frame" x="225" y="157" width="46" height="65"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDJ-Z3-lEu">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aDJ-Z3-lEu">
                                         <rect key="frame" x="144" y="83" width="100" height="66"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardback3v2" translatesAutoresizingMaskIntoConstraints="NO" id="pEx-gN-1Mx">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="cardback3v2" translatesAutoresizingMaskIntoConstraints="NO" id="pEx-gN-1Mx">
                                                 <rect key="frame" x="0.0" y="0.0" width="46" height="66"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardback3v2" translatesAutoresizingMaskIntoConstraints="NO" id="GDv-cw-hN7">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="cardback3v2" translatesAutoresizingMaskIntoConstraints="NO" id="GDv-cw-hN7">
                                                 <rect key="frame" x="54" y="0.0" width="46" height="66"/>
                                             </imageView>
                                         </subviews>
@@ -1035,7 +1035,7 @@ Difficulty: Normal</string>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardback2v2" translatesAutoresizingMaskIntoConstraints="NO" id="TRf-c7-N5v">
                                         <rect key="frame" x="117" y="157" width="46" height="65"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="srA-2A-OEv">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="srA-2A-OEv">
                                         <rect key="frame" x="90" y="230" width="208" height="65"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardback1v2" translatesAutoresizingMaskIntoConstraints="NO" id="dTg-sY-jy6">
@@ -1647,7 +1647,7 @@ Difficulty: Normal</string>
         <image name="logowin" width="560" height="471"/>
         <image name="slingergoed" width="770" height="615"/>
         <image name="trophy" width="256" height="256"/>
-        <image name="tutorialSS1" width="768" height="1024"/>
+        <image name="tutorialSS1" width="1551" height="2068"/>
         <image name="tutorialText1" width="572" height="201"/>
     </resources>
     <inferredMetricsTieBreakers>
