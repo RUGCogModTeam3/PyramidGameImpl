@@ -6,7 +6,7 @@ class HorusAI: SekhmetAI {
         super.init(game: game)
         self.dm.baseLevelDecay = 0.5
         self.bluffProbabilities = [0,25,25,65,50]
-        self.forgetActivation = -2.1
+        self.callBluffProbabilities = [0,75,60,65,60,30,50]
     }
     
     override func name()->String {
