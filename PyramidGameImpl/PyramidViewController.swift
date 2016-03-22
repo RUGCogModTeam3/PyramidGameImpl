@@ -415,10 +415,12 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         delayUntil({ return self.presentedViewController == nil }) {
             let lScore = self.game.players[.Left]!.score
             let rScore = self.game.players[.Right]!.score
-            if lScore >= rScore {
+            if lScore > rScore {
                 self.performSegueWithIdentifier("showWin", sender: self)
-            } else {
+            } else if lScore < rScore {
                 self.performSegueWithIdentifier("showLoss", sender: self)
+            } else {
+                self.performSegueWithIdentifier("showTie", sender: self)
             }
         }
     }
@@ -457,7 +459,7 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
                 }
                 tvc.text = tutorialText
             }
-        } else if segue.identifier == "showLoss" || segue.identifier == "showWin" {
+        } else if segue.identifier == "showLoss" || segue.identifier == "showWin" || segue.identifier == "showTie" {
             if let rvc = segue.destinationViewController as? ResultViewController {
                 rvc.lScore = game.players[.Left]!.score
                 rvc.rScore = game.players[.Right]!.score

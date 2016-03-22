@@ -10,26 +10,45 @@ import UIKit
 
 class TutorialViewController: UIViewController {
 
+    @IBOutlet weak var tutorialScreenshot: UIImageView! {
+        didSet { setImages() }
+    }
+    @IBOutlet weak var tutorialText: UIImageView! {
+        didSet { setImages() }
+    }
+    
+    let imageSequence = ["1","2","3","4a","4b","5","6a","6b"]
+    var currNdx = 0 {
+        didSet {
+            if currNdx < 0 || currNdx >= imageSequence.count {
+                currNdx = min(max(0, currNdx), imageSequence.count-1)
+            } else {
+                setImages()
+            }
+        }
+    }
+    
+    func setImages() {
+        let suffix = imageSequence[currNdx]
+        tutorialText?.image = UIImage(named: "tutorialText\(suffix)")
+        tutorialScreenshot?.image = UIImage(named: "tutorialSS\(suffix)")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return .Portrait
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func advance() {
+        currNdx++
     }
-    */
-
+    
+    @IBAction func goBack() {
+        currNdx--
+    }
 }

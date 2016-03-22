@@ -11,20 +11,16 @@ import UIKit
 class OpponentSelectController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        print(segue.destinationViewController)
         if let pvc = segue.destinationViewController as? PyramidViewController {
             if let id = segue.identifier {
                 pvc.game = PyramidGame(numRanks:13, numSuits:4, pyramidRows:4, handSize:4)
                 if id == "chooseSekhmet" {
-                    print("choose1")
                     pvc.opponent = SekhmetAI(game:pvc.game)
                 } else if id == "chooseHorus" {
-                    print("choose2")
                     pvc.opponent = HorusAI(game:pvc.game)
                 } else {
-                    print("PANIC!!!")
+                    print("PANIC!!! Unknown segue identifier:\(id)")
                 }
-                print(pvc.opponent)
             }
         }
         super.prepareForSegue(segue, sender: sender)
