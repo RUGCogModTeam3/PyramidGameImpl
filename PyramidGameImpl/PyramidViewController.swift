@@ -252,6 +252,13 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         }
     }
     
+    @IBAction func quitGame(sender: UIButton) {
+        let alert = UIAlertController(title: "Confirm Quit Game", message: "Are you sure you want to quit this game? Your progress will not be saved.", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .Default) { _ in self.performSegueWithIdentifier("gotoMainMenu", sender: self) })
+        alert.addAction(UIAlertAction(title: "No", style: .Default) {_ in})
+        presentViewController(alert, animated: true) {_ in}
+    }
+    
     var state: UIState? {
         didSet {
             if let unwrappedState = state {
