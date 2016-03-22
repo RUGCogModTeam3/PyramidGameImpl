@@ -440,6 +440,20 @@ Difficulty: Normal</string>
                                     <constraint firstItem="zDS-pC-WVB" firstAttribute="leading" secondItem="kmy-cP-KxK" secondAttribute="trailing" constant="20" id="xns-cZ-hG4"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9t1-Me-fNR">
+                                <rect key="frame" x="20" y="30" width="100" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="FGl-Kn-160"/>
+                                    <constraint firstAttribute="width" constant="100" id="LRf-wp-pu2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title=" &lt;&lt; Back  " backgroundImage="buttonv0.5">
+                                    <color key="titleColor" red="0.90956535530000004" green="0.91739610599999999" blue="0.90812811380000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="9qR-Ee-gE7" kind="showDetail" id="OWO-9E-dmK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -449,12 +463,18 @@ Difficulty: Normal</string>
                             <constraint firstItem="Hak-W3-II1" firstAttribute="leading" secondItem="UEX-eF-aLt" secondAttribute="leadingMargin" constant="-20" id="PKS-9u-FHl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Hak-W3-II1" secondAttribute="trailing" constant="-20" id="SMO-eL-dJ0"/>
                             <constraint firstItem="Rtq-GH-Tcr" firstAttribute="top" secondItem="Hak-W3-II1" secondAttribute="bottom" id="SfF-kk-xp8"/>
+                            <constraint firstItem="9t1-Me-fNR" firstAttribute="top" secondItem="RUd-my-h7d" secondAttribute="bottom" constant="10" id="U7o-a8-VEH"/>
+                            <constraint firstItem="Hak-W3-II1" firstAttribute="top" secondItem="9t1-Me-fNR" secondAttribute="bottom" constant="-52" id="VaT-NH-4Dp"/>
                             <constraint firstItem="bri-72-FyU" firstAttribute="centerX" secondItem="UEX-eF-aLt" secondAttribute="centerX" id="ior-Db-c8G"/>
                             <constraint firstItem="Xb7-i9-QZU" firstAttribute="centerX" secondItem="UEX-eF-aLt" secondAttribute="centerX" id="mX8-h3-Fjg"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="9t1-Me-fNR" secondAttribute="leading" id="n8w-7B-3Ud"/>
                             <constraint firstItem="Xb7-i9-QZU" firstAttribute="top" secondItem="RUd-my-h7d" secondAttribute="bottom" constant="100" id="ryj-5q-Ppm"/>
+                            <constraint firstItem="Hak-W3-II1" firstAttribute="leading" secondItem="9t1-Me-fNR" secondAttribute="trailing" constant="-120" id="w4L-qk-IVt"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="VaT-NH-4Dp"/>
+                                <exclude reference="w4L-qk-IVt"/>
                                 <exclude reference="ryj-5q-Ppm"/>
                             </mask>
                         </variation>
@@ -965,22 +985,14 @@ Difficulty: Normal</string>
                         <outlet property="actionButton1" destination="smj-hq-ssb" id="kby-z9-bCf"/>
                         <outlet property="actionButton2" destination="Cic-Vo-1Hj" id="sui-jO-QFE"/>
                         <outlet property="card0" destination="92Y-at-r6r" id="b66-iE-b52"/>
-                        <outlet property="card0TopConstraint" destination="Bgd-3Q-hop" id="irT-Fy-DOC"/>
                         <outlet property="card1" destination="Da2-zg-Eby" id="Qxx-3x-cED"/>
-                        <outlet property="card1TopConstraint" destination="aTy-kf-Vmd" id="Fy0-CA-EBg"/>
                         <outlet property="card2" destination="oeD-jN-0Gh" id="yoL-kN-FQL"/>
-                        <outlet property="card2TopConstraint" destination="ewN-RX-dGu" id="cci-xa-f6m"/>
                         <outlet property="card3" destination="yyI-WW-W7S" id="9Gd-6Z-Ega"/>
-                        <outlet property="card3TopConstraint" destination="hzW-8I-BdG" id="jf7-7g-Dci"/>
                         <outlet property="lscore" destination="q2w-Sk-hUZ" id="w9N-ke-ns7"/>
                         <outlet property="oppCard0" destination="FFL-Ec-aeK" id="ozB-Ce-nSy"/>
-                        <outlet property="oppCard0TopConstraint" destination="EyG-QC-JNi" id="Ywv-kj-hbZ"/>
                         <outlet property="oppCard1" destination="Ad0-tq-tjZ" id="WIy-xu-EOf"/>
-                        <outlet property="oppCard1TopConstraint" destination="e23-eP-ldD" id="L7q-Vn-bCo"/>
                         <outlet property="oppCard2" destination="ws4-NP-Yoa" id="qoN-Hz-t37"/>
-                        <outlet property="oppCard2TopConstraint" destination="2aS-5N-0Wh" id="gic-q8-V3w"/>
                         <outlet property="oppCard3" destination="f6n-p0-Kji" id="gCQ-ne-trp"/>
-                        <outlet property="oppCard3TopConstraint" destination="Y09-L3-Ih1" id="qtc-AB-C9U"/>
                         <outlet property="oppFace" destination="INr-KD-snY" id="V2w-Tm-xOS"/>
                         <outlet property="oppLabel" destination="q1S-Ds-VFH" id="GFj-fn-knU"/>
                         <outlet property="pcard11" destination="1FR-Er-jEJ" id="DrQ-gl-lth"/>
@@ -1317,7 +1329,7 @@ Difficulty: Normal</string>
         <image name="trophy" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="OWO-9E-dmK"/>
         <segue reference="dQy-o4-105"/>
-        <segue reference="1RD-NQ-Tra"/>
     </inferredMetricsTieBreakers>
 </document>

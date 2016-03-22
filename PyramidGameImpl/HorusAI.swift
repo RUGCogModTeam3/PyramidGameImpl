@@ -28,9 +28,9 @@ class HorusAI: SekhmetAI {
     override func textPlayerNewCard()->String { return "This is your new card. If you hope to beat me, I suggest\nyou remember it well." }
     override func textAIPass(cardName:String)->String { return "It is now my turn. Unfortunately I do not have a \(cardName)." }
     override func textAIPlay(cardName:String)->String { return "It is now my turn. I do have a \(cardName).\n\nDo you think I would lie?" }
-    override func textAICallCorrectBluff(points:Int)->String { return "Hm... You caught me in my lie. You get \(points) points." }
+    override func textAICallCorrectBluff(points:Int)->String { return "I may have been bending the truth a little. You get\n\(points) points." }
     override func textAICallCorrectMistake(points:Int)->String { return "I seem to have misremembered. I will not do\nthat again. You get \(points) points." }
     override func textAICallIncorrect(points:Int)->String { return "I told you I was telling the truth. I get \(points) points." }
     override func textAINoCall(points:Int)->String { return "Very well. I get \(points) points." }
-    override func textAINewCard()->String { return "Now I get a new card." }
+    override func textAINewCard()->String { return "Great. Another beautiful card to add to my collection." }
 }

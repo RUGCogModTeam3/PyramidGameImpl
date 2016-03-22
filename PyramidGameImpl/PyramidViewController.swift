@@ -11,7 +11,7 @@ import UIKit
 
 
 enum UIState {
-    case MemorizeFirst, HumanYesNo, HumanSelect, HumanBS(ndx:Int), HumanNewCard(ndx:Int), ModelSelect, ModelPass, ModelBS(ndx:Int), ModelPostBS(ndx:Int, call:Bool), Finished;
+    case MemorizeFirst, HumanYesNo, HumanSelect, HumanBS(ndx:Int), HumanNewCard(ndx:Int), ModelSelect, ModelPass, ModelBS(ndx:Int), ModelPostBS(ndx:Int, call:Bool), ModelNewCard(ndx:Int), Finished;
     
     func clickAB1(c:PyramidViewController) {
         switch self {
@@ -35,7 +35,10 @@ enum UIState {
         case let .ModelBS(ndx):
             c.state = .ModelPostBS(ndx:ndx, call:true)
             
-        case .ModelPostBS:
+        case let .ModelPostBS(ndx, _):
+            c.state = .ModelNewCard(ndx:ndx)
+            
+        case .ModelNewCard:
             c.state = .HumanYesNo
             
         case .Finished:
@@ -90,7 +93,7 @@ enum UIState {
                 }
                 c.setABTitles("Yes/Bluff", "No")
                 c.opponent.observeCard(nextCard)
-                c.pcards.popLast()!.image = nextCard.image
+                c.showPcard()
                 c.tutorialText = c.opponent.textPlayerDoYouHaveA(nextCard.rankName)
             } else {
                 c.state = .Finished
@@ -129,7 +132,7 @@ enum UIState {
         case let .HumanNewCard(ndx):
             c.setABTitles("Next", nil)
             c.tutorialText = c.opponent.textPlayerNewCard()
-            c.showHandCard(ndx)
+            c.replaceHandCard(ndx)
             
         case .ModelSelect:
             let choice = c.opponent.getPlay(c.game.pyramid.getLastFlippedCard())
@@ -172,7 +175,12 @@ enum UIState {
             } else {
                 textBase = c.opponent.textAINoCall(c.game.pyramid.rowValue())
             }
-            c.tutorialText = textBase + "\n\n" + c.opponent.textAINewCard()
+            c.tutorialText = textBase
+            
+        case let .ModelNewCard(ndx):
+            c.setABTitles("Next", nil)
+            c.replaceOppHandCard(ndx)
+            c.tutorialText = c.opponent.textAINewCard()
             
         case .Finished:
             c.finishGame()
@@ -189,6 +197,7 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     var opponent: PyramidAI!
     let animationDuration = 0.75
     let cardOffset:CGFloat = 32
+    let cardBackImage = UIImage(named:"cardbackv2")
     
     
     @IBOutlet weak var card0: UIButton!
@@ -215,28 +224,18 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
     
     @IBOutlet weak var portraitButton: UIButton!
     
-    @IBOutlet weak var card0TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var card1TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var card2TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var card3TopConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var oppCard0: UIImageView!
     @IBOutlet weak var oppCard1: UIImageView!
     @IBOutlet weak var oppCard2: UIImageView!
     @IBOutlet weak var oppCard3: UIImageView!
     
-    @IBOutlet weak var oppCard0TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var oppCard1TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var oppCard2TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var oppCard3TopConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var oppLabel: UILabel!
     @IBOutlet weak var oppFace: UIImageView!
     
     var cards = [UIButton!]()
-    var cardConstraints = [NSLayoutConstraint!]()
+    var revealedCards = [Bool](count:4, repeatedValue:false)
     var oppcards = [UIImageView!]()
-    var oppcardConstraints = [NSLayoutConstraint!]()
+    var revealedOppcards = [Bool](count:4, repeatedValue:false)
     var pcards = [UIImageView!]()
     
     var tutorialText: String! = nil {
@@ -268,10 +267,6 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         cards.append(card1)
         cards.append(card2)
         cards.append(card3)
-        cardConstraints.append(card0TopConstraint)
-        cardConstraints.append(card1TopConstraint)
-        cardConstraints.append(card2TopConstraint)
-        cardConstraints.append(card3TopConstraint)
         pcards.append(pcard41)
         pcards.append(pcard32)
         pcards.append(pcard31)
@@ -286,75 +281,95 @@ class PyramidViewController: UIViewController, UIPopoverPresentationControllerDe
         oppcards.append(oppCard1)
         oppcards.append(oppCard2)
         oppcards.append(oppCard3)
-        oppcardConstraints.append(oppCard0TopConstraint)
-        oppcardConstraints.append(oppCard1TopConstraint)
-        oppcardConstraints.append(oppCard2TopConstraint)
-        oppcardConstraints.append(oppCard3TopConstraint)
         
         oppFace.image = UIImage(named: opponent.iconName())
         oppLabel.text = opponent.name()
         
-        for constraint in cardConstraints {
-            constraint.constant = 8
-        }
-        
         state = .MemorizeFirst
+    }
+    
+    func showPcard() {
+        let pcard = pcards.popLast()!
+        let newCard = game.pyramid.getLastFlippedCard()
+        UIView.transitionWithView(pcard, duration: animationDuration, options: .TransitionFlipFromLeft, animations: { pcard.image = newCard.image }, completion: nil)
     }
     
     func showHandCard(ndx:Int) {
         let playerCard = game.players[.Left]!.hand[ndx]
         let cardView = cards[ndx]
-        UIView.transitionWithView(cardView, duration: animationDuration, options: .TransitionFlipFromLeft, animations: { cardView.setBackgroundImage(playerCard.image, forState: .Normal) }, completion: {print("Finished showHandCard animation: \($0)") })
+        UIView.transitionWithView(cardView, duration: animationDuration, options: .TransitionFlipFromLeft, animations: { cardView.setBackgroundImage(playerCard.image, forState: .Normal) }, completion: nil)
+        revealedCards[ndx] = true
     }
     
     func hideHandCard(ndx:Int) {
-        let cardView = cards[ndx]
-        UIView.transitionWithView(cardView, duration: animationDuration, options: .TransitionFlipFromRight, animations: { cardView.setBackgroundImage(UIImage(named:"CardBack"), forState: .Normal) }, completion: {print("Finished showHandCard animation: \($0)") })
+        if revealedCards[ndx] {
+            let cardView = cards[ndx]
+            UIView.transitionWithView(cardView, duration: animationDuration, options: .TransitionFlipFromRight, animations: { cardView.setBackgroundImage(self.cardBackImage, forState: .Normal) }, completion: nil)
+            revealedCards[ndx] = false
+        }
     }
     
     func raiseHandCard(ndx:Int) {
-        //cardConstraints[ndx].constant = 8
         let cardView = cards[ndx]
-        
         UIView.animateWithDuration(animationDuration, animations: {
             cardView.transform = CGAffineTransformMakeTranslation(0, 0)
         })
     }
     
     func lowerHandCard(ndx:Int) {
-        //cardConstraints[ndx].constant = 40
         let cardView = cards[ndx]
-        
         UIView.animateWithDuration(animationDuration, animations: {
             cardView.transform = CGAffineTransformMakeTranslation(0, self.cardOffset)
         })
     }
     
     func replaceHandCard(ndx:Int) {
-        
+        let playerCard = game.players[.Left]!.hand[ndx]
+        let cardView = cards[ndx]
+        UIView.animateWithDuration(animationDuration/2, delay: 0, options: .CurveLinear, animations: { cardView.transform = CGAffineTransformMakeTranslation(0, cardView.frame.size.height+10) }) { _ in
+            cardView.setBackgroundImage(playerCard.image, forState: .Normal)
+            UIView.animateWithDuration(self.animationDuration/2, delay: 0.1, options: .CurveLinear, animations: {cardView.transform = CGAffineTransformMakeTranslation(0, 0)}, completion: nil)
+        }
+        revealedCards[ndx] = true
     }
     
     func showOppHandCard(ndx:Int) {
         let playerCard = game.players[.Right]!.hand[ndx]
         let cardView = oppcards[ndx]
-        UIView.transitionWithView(cardView, duration: 0.75, options: .TransitionFlipFromLeft, animations: { cardView.image = playerCard.image }, completion: {print("Finished showOppHandCard animation: \($0)") })
+        UIView.transitionWithView(cardView, duration: animationDuration, options: .TransitionFlipFromLeft, animations: { cardView.image = playerCard.image }, completion: nil)
         oppcards[ndx].image = playerCard.image
+        revealedOppcards[ndx] = true
     }
     
     func hideOppHandCard(ndx:Int) {
-        oppcards[ndx].image = UIImage(named:"CardBack")
+        if revealedOppcards[ndx] {
+            let cardView = oppcards[ndx]
+            UIView.transitionWithView(cardView, duration: animationDuration, options: .TransitionFlipFromRight, animations: { cardView.image = self.cardBackImage }, completion: nil)
+            revealedOppcards[ndx] = false
+        }
     }
     
     func raiseOppHandCard(ndx:Int) {
-        oppcardConstraints[ndx].constant = 8
+        let cardView = oppcards[ndx]
+        UIView.animateWithDuration(animationDuration, animations: {
+            cardView.transform = CGAffineTransformMakeTranslation(0, 0)
+        })
     }
     
     func lowerOppHandCard(ndx:Int) {
-        oppcardConstraints[ndx].constant = 40
+        let cardView = oppcards[ndx]
+        UIView.animateWithDuration(animationDuration, animations: {
+            cardView.transform = CGAffineTransformMakeTranslation(0, -self.cardOffset)
+        })
     }
     
     func replaceOppHandCard(ndx:Int) {
-        oppcardConstraints[ndx].constant = 40
+        let cardView = oppcards[ndx]
+        UIView.animateWithDuration(animationDuration/2, delay: 0, options: .CurveLinear, animations: { cardView.transform = CGAffineTransformMakeTranslation(0, -cardView.frame.size.height-10) }) { _ in
+            cardView.image = self.cardBackImage
+            UIView.animateWithDuration(self.animationDuration/2, delay: 0.1, options: .CurveLinear, animations: {cardView.transform = CGAffineTransformMakeTranslation(0, 0)}, completion: nil)
+        }
+        revealedOppcards[ndx] = false
     }
     
     func getCardNdx(c:UIButton) -> Int {
