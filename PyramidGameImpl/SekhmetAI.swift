@@ -4,9 +4,8 @@ import Foundation
 class SekhmetAI: Model, PyramidAI {
     var cardCount = [Int](count:13, repeatedValue: 0)
     let game: PyramidGame
-    var forgetActivation = -2.0
-    var difficulty = "easy"
-    var bluffProbabilities = [10,35,35,70,60]
+    var bluffProbabilities = [10,30,30,65,55]
+    var callBluffProbabilities = [10,70,60,65,60,35,50]
     var didLastBluff = false
     
     init(game: PyramidGame){
@@ -33,6 +32,8 @@ class SekhmetAI: Model, PyramidAI {
             cardlocation.setSlot("rank",value: "\(card.rank)")
             cardlocation.setSlot("lower",value: "\(lower)")
             cardlocation.setSlot("upper",value: "\(upper)")
+            let cardColor = (card.suit-1)/2
+            cardlocation.setSlot("color",value:"\(cardColor)")
             self.dm.addToDM(cardlocation)
             self.dm.addToDM(cardlocation)
         }
@@ -69,31 +70,28 @@ class SekhmetAI: Model, PyramidAI {
     func callBullshit(lastRevealedCard: Card) -> Bool {
         let bias = self.game.players[.Left]!.score-self.game.players[.Right]!.score
         if ((self.game.players[.Right]!.score-self.game.players[.Left]!.score)>self.game.pyramid.remainingNonBluffPoints()) {
-            return false
+            return makeBluffCallChoice(callBluffProbabilities[0])
         }
         let rank = "\(lastRevealedCard.rank)"
         if let cardChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
             if cardChunk.slotTextValue("counts")! == "high" {
                 if let bluffChunk = self.retrieve(["isa":"playerbluff"]) {
                     if (bluffChunk.slotTextValue("didbluff")! == "true"){
-                        return makeBluffCallChoice(70+bias)
+                        return makeBluffCallChoice(callBluffProbabilities[1]+bias)
                     }
-                    return makeBluffCallChoice(60+bias)
+                    return makeBluffCallChoice(callBluffProbabilities[2]+bias)
                 }
-                return makeBluffCallChoice(65+bias)
+                return makeBluffCallChoice(callBluffProbabilities[3]+bias)
             }
-            return makeBluffCallChoice(35+bias)
         }
         
         if let bluffChunk = self.retrieve(["isa":"playerbluff"]) {
             if (bluffChunk.slotTextValue("didbluff")! == "true"){
-                return makeBluffCallChoice(60+bias)
+                return makeBluffCallChoice(callBluffProbabilities[4]+bias)
             }
-            return makeBluffCallChoice(35+bias)
+            return makeBluffCallChoice(callBluffProbabilities[5]+bias)
         }
-        
-        //TODO
-        return makeBluffCallChoice(50+bias)
+        return makeBluffCallChoice(callBluffProbabilities[6]+bias)
     }
     
     func makeChoice(bluffProbability: Int)-> Int?{
@@ -119,16 +117,28 @@ class SekhmetAI: Model, PyramidAI {
         didLastBluff = true
         
         if ((self.game.players[.Right]!.score-self.game.players[.Left]!.score)>self.game.pyramid.remainingNonBluffPoints()) {
-            let play = makeChoice(probabilities[0]+bias)
+            let play = makeChoice(probabilities[0])
             return play
         }
         if let cardChunk = self.retrieve(["isa":"modelcard","rank":rank]) {
+            let color = cardChunk.slotTextValue("color")!
+            print("I've retrieved color: \(color), rank: \(rank) ")
             let lower = max(Int(cardChunk.slotTextValue("lower")!)!, 0)
             let upper = min(Int(cardChunk.slotTextValue("upper")!)!,3)
-            let play = (lower+Int(arc4random_uniform(UInt32(1+upper-lower))))
-            print("getPlay lower:\(lower) upper:\(upper) play:\(play)")
-            didLastBluff = false
-            return play
+            if let forget = self.retrieve(["isa":"forgetCard","rank":rank,"color":color]){
+                print("Forget is \(forget) ")
+                if (Int(forget.slotTextValue("location")!)! != lower) && (Int(forget.slotTextValue("location")!)! != upper){
+                    let play = (lower+Int(arc4random_uniform(UInt32(1+upper-lower))))
+                    print("getPlay lower:\(lower) upper:\(upper) play:\(play)")
+                    didLastBluff = false
+                    return play
+                }
+            }else{
+                let play = (lower+Int(arc4random_uniform(UInt32(1+upper-lower))))
+                print("getPlay lower:\(lower) upper:\(upper) play:\(play)")
+                didLastBluff = false
+                return play
+            }
         }
         if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
             if countChunk.slotTextValue("counts")! == "high" {
@@ -153,7 +163,7 @@ class SekhmetAI: Model, PyramidAI {
     func getPlay(lastRevealedCard: Card)->Int? {
         let output = getPlayCard(lastRevealedCard)
         if let unwrappedOutput = output {
-            self.forget(self.game.players[.Right]!.hand[unwrappedOutput].rank, ndx: unwrappedOutput)
+            self.forget(self.game.players[.Right]!.hand[unwrappedOutput].rank, ndx: unwrappedOutput, suit: self.game.players[.Right]!.hand[unwrappedOutput].suit)
         }
         return output
     }
@@ -187,20 +197,34 @@ class SekhmetAI: Model, PyramidAI {
         if let chunk = self.retrieve(["isa":"modelcard", "upper":"\(ndx)"]) {
             self.dm.addToDM(chunk)
         }
+        if let forget = self.retrieve(["isa":"forgetCard", "location":"\(ndx)"]){
+            self.dm.addToDM(forget)
+        }
     }
     
-    func forget(rank: Int, ndx: Int){
-        for (_, chunk) in self.dm.chunks {
-            if chunk.slotTextValue("isa") == "modelcard" {
-                let chunkRank = chunk.slotTextValue("rank")!
-                let chunkLower = chunk.slotTextValue("lower")!
-                let chunkUpper = chunk.slotTextValue("upper")!
-                if chunkRank == "\(rank)" && (chunkLower == "\(ndx)" || chunkUpper == "\(ndx)") {
-                    //chunk.references = max(chunk.references-self.forgetRate,0)
-                    chunk.fixedActivation = forgetActivation
-                }
-            }
-        }
+//    func forget(rank: Int, ndx: Int){
+//        for (_, chunk) in self.dm.chunks {
+//            if chunk.slotTextValue("isa") == "modelcard" {
+//                let chunkRank = chunk.slotTextValue("rank")!
+//                let chunkLower = chunk.slotTextValue("lower")!
+//                let chunkUpper = chunk.slotTextValue("upper")!
+//                if chunkRank == "\(rank)" && (chunkLower == "\(ndx)" || chunkUpper == "\(ndx)") {
+//                    //chunk.references = max(chunk.references-self.forgetRate,0)
+//                    chunk.fixedActivation = forgetActivation
+//                }
+//            }
+//        }
+//    }
+    
+    func forget(rank: Int, ndx: Int, suit: Int){
+        let forgetChunk = generateNewChunk("forgetCard")
+        forgetChunk.setSlot("isa", value: "forgetCard")
+        forgetChunk.setSlot("rank", value: "\(rank)")
+        forgetChunk.setSlot("location", value: "\(ndx)")
+        let cardColor = (suit-1)/2
+        forgetChunk.setSlot("color", value: "\(cardColor)")
+        print("\(forgetChunk)")
+        self.dm.addToDM(forgetChunk)
     }
     
     
