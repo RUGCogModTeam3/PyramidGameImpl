@@ -40,14 +40,6 @@ class TutorialViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .Portrait
-    }
-    
-    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
-        return .Portrait
-    }
-    
     @IBAction func advance() {
         currNdx++
     }

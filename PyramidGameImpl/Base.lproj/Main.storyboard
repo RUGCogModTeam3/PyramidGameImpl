@@ -1425,6 +1425,7 @@ Difficulty: Normal</string>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="181" id="VrX-Rx-oRD"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="58"/>
                                 <state key="normal" title="&gt;">
                                     <color key="titleColor" red="0.90956535530000004" green="0.91739610599999999" blue="0.90812811380000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -1439,6 +1440,7 @@ Difficulty: Normal</string>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIH-QM-88o">
                                 <rect key="frame" x="0.0" y="70" width="120" height="530"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="58"/>
                                 <state key="normal" title="&lt;">
                                     <color key="titleColor" red="0.90956535530000004" green="0.91739610599999999" blue="0.90812811380000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -1518,7 +1520,7 @@ Difficulty: Normal</string>
         <image name="tutorialText1" width="572" height="201"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="OWO-9E-dmK"/>
+        <segue reference="Oni-pd-G9N"/>
         <segue reference="zi4-oz-hbP"/>
         <segue reference="Xi5-LD-xHx"/>
         <segue reference="dQy-o4-105"/>
