@@ -1421,7 +1421,7 @@ Difficulty: Normal</string>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ir-v5-Ngd">
-                                <rect key="frame" x="480" y="70" width="120" height="530"/>
+                                <rect key="frame" x="120" y="70" width="480" height="530"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="181" id="VrX-Rx-oRD"/>
                                 </constraints>
@@ -1465,7 +1465,7 @@ Difficulty: Normal</string>
                             <constraint firstItem="aMS-i3-OlZ" firstAttribute="top" secondItem="vcu-w1-5d1" secondAttribute="bottom" constant="8" symbolic="YES" id="Dbp-ns-mIc"/>
                             <constraint firstItem="Xmd-O0-D61" firstAttribute="top" secondItem="9Zq-it-POV" secondAttribute="bottom" id="E4z-Rm-3DM"/>
                             <constraint firstItem="aMS-i3-OlZ" firstAttribute="centerX" secondItem="vcu-w1-5d1" secondAttribute="centerX" id="ENv-59-tuR"/>
-                            <constraint firstItem="5Ir-v5-Ngd" firstAttribute="width" secondItem="JeG-QF-Bs1" secondAttribute="width" multiplier="1:5" id="FLA-RO-HC3"/>
+                            <constraint firstItem="5Ir-v5-Ngd" firstAttribute="width" secondItem="JeG-QF-Bs1" secondAttribute="width" multiplier="4:5" id="FLA-RO-HC3"/>
                             <constraint firstItem="AIH-QM-88o" firstAttribute="width" secondItem="JeG-QF-Bs1" secondAttribute="width" multiplier="1:5" id="I3p-mw-Hhm"/>
                             <constraint firstItem="5Ir-v5-Ngd" firstAttribute="top" secondItem="gof-aR-Nfl" secondAttribute="bottom" id="J0e-GY-50D"/>
                             <constraint firstItem="la5-ov-Y9j" firstAttribute="bottom" secondItem="Xmd-O0-D61" secondAttribute="top" id="LLv-7h-4It"/>
@@ -1487,6 +1487,8 @@ Difficulty: Normal</string>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="leftButton" destination="AIH-QM-88o" id="CeW-tE-5XM"/>
+                        <outlet property="rightButton" destination="5Ir-v5-Ngd" id="RtY-tP-Zdu"/>
                         <outlet property="tutorialScreenshot" destination="aMS-i3-OlZ" id="t88-sg-YVo"/>
                         <outlet property="tutorialText" destination="la5-ov-Y9j" id="28O-w7-k2k"/>
                     </connections>
