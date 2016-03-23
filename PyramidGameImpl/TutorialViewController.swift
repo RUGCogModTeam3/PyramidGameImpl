@@ -44,6 +44,10 @@ class TutorialViewController: UIViewController {
         return .Portrait
     }
     
+    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+        return .Portrait
+    }
+    
     @IBAction func advance() {
         currNdx++
     }
