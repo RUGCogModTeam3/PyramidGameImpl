@@ -162,145 +162,6 @@
             </objects>
             <point key="canvasLocation" x="-713" y="320"/>
         </scene>
-        <!--Tutorial-->
-        <scene sceneID="LJc-fW-JtE">
-            <objects>
-                <viewController title="Tutorial" id="cSf-yO-szi" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bYd-49-CQr"/>
-                        <viewControllerLayoutGuide type="bottom" id="bRH-HE-1X4"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="eYh-8V-mzW">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="desertSand" translatesAutoresizingMaskIntoConstraints="NO" id="WJf-GV-mKe">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How To Play" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Meo-a7-CLV">
-                                <rect key="frame" x="196" y="40" width="209" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="209" id="OKL-1z-jER"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <color key="textColor" red="0.49609375" green="0.2446758879" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZy-8T-vSM">
-                                <rect key="frame" x="60" y="85" width="480" height="80"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="ZZy-8T-vSM" secondAttribute="height" multiplier="6:1" id="1ob-ZL-e5U"/>
-                                    <constraint firstAttribute="height" constant="80" id="BO7-Tv-qgb"/>
-                                </constraints>
-                                <string key="text">The objective of the game is to have more points than your opponent by the end. Points can be scored by CALLING CARDS and CALLING A BLUFF from the opponent.</string>
-                                <color key="textColor" red="0.49609375" green="0.2446758879" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Calling a card" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVk-8g-8XK">
-                                <rect key="frame" x="60" y="180" width="480" height="28"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="cVk-8g-8XK" secondAttribute="height" multiplier="120:7" id="uS9-6g-16R"/>
-                                </constraints>
-                                <color key="textColor" red="0.49609375" green="0.2446758879" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Calling a bluff" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sD-iy-Mfj">
-                                <rect key="frame" x="60" y="375" width="480" height="33"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="0sD-iy-Mfj" secondAttribute="height" multiplier="160:11" id="0ek-5a-PVA"/>
-                                </constraints>
-                                <color key="textColor" red="0.49609375" green="0.2446758879" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oFy-ha-99P">
-                                <rect key="frame" x="60" y="208" width="480" height="82"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="oFy-ha-99P" secondAttribute="height" multiplier="240:41" id="Chh-XP-Qjt"/>
-                                </constraints>
-                                <string key="text">During the start of a round the next card in the pyramid is flipped. You are asked if you have this card. If you choose NO no points are given and it becomes the opponents turn. If you choose YES/BLUFF you can choose a card from your hand.</string>
-                                <color key="textColor" red="0.49609375" green="0.2446758879" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38N-RU-I7V">
-                                <rect key="frame" x="60" y="288" width="480" height="82"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="82" id="Lsl-6T-eyQ"/>
-                                </constraints>
-                                <string key="text">If the opponent believes that you are bluffing you have to show your card. If it was a bluff the opponent gets double points (layer 1  x 2 = 2, layer 2  x 2 = 4 etc...). If he is wrong, you get double points. If the opponent does not think that you are blugging you get 1 point.</string>
-                                <color key="textColor" red="0.49609375" green="0.2446758879" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDC-2b-WL1">
-                                <rect key="frame" x="60" y="408" width="480" height="111"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="QDC-2b-WL1" secondAttribute="height" multiplier="160:37" id="Q9b-AV-8cV"/>
-                                </constraints>
-                                <string key="text">After your turn, the opponent will say if it does or does not have the flipped card in the pyramid. If he says ' no' the next round will start without changing points. If he says ' yes' you can then decide if he is bluffing or not. The opponent gets points if you do not call a bluff. They get double points is you wrongfully call a bluff and you get double points if you correctly call their bluff.</string>
-                                <color key="textColor" red="0.49609375" green="0.2446758879" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gW4-HE-tIU">
-                                <rect key="frame" x="20" y="30" width="100" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="3zp-dp-z6S"/>
-                                    <constraint firstAttribute="width" constant="100" id="OHd-3i-Lum"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title=" &lt;&lt; Back  " backgroundImage="buttonv0.5">
-                                    <color key="titleColor" red="0.90956535530000004" green="0.91739610599999999" blue="0.90812811380000003" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="9qR-Ee-gE7" kind="showDetail" action="showViewController:sender:" id="Yl4-dC-wVI"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="ZZy-8T-vSM" firstAttribute="centerX" secondItem="WJf-GV-mKe" secondAttribute="centerX" id="0ow-VW-SJ4"/>
-                            <constraint firstItem="cVk-8g-8XK" firstAttribute="centerX" secondItem="WJf-GV-mKe" secondAttribute="centerX" id="1Sc-0Z-CTo"/>
-                            <constraint firstItem="oFy-ha-99P" firstAttribute="centerX" secondItem="WJf-GV-mKe" secondAttribute="centerX" id="7wH-GM-3IG"/>
-                            <constraint firstItem="38N-RU-I7V" firstAttribute="width" secondItem="ZZy-8T-vSM" secondAttribute="width" id="Ap3-iP-un3"/>
-                            <constraint firstItem="gW4-HE-tIU" firstAttribute="leading" secondItem="eYh-8V-mzW" secondAttribute="leadingMargin" id="C8h-Xp-phD"/>
-                            <constraint firstItem="QDC-2b-WL1" firstAttribute="centerX" secondItem="WJf-GV-mKe" secondAttribute="centerX" id="Cr8-j3-oXX"/>
-                            <constraint firstItem="cVk-8g-8XK" firstAttribute="top" secondItem="ZZy-8T-vSM" secondAttribute="bottom" constant="15" id="E9u-ZK-bBy"/>
-                            <constraint firstItem="QDC-2b-WL1" firstAttribute="top" secondItem="0sD-iy-Mfj" secondAttribute="bottom" id="EnN-3e-6AY"/>
-                            <constraint firstItem="0sD-iy-Mfj" firstAttribute="top" secondItem="38N-RU-I7V" secondAttribute="bottom" constant="5" id="F80-b7-hvX"/>
-                            <constraint firstItem="38N-RU-I7V" firstAttribute="top" secondItem="oFy-ha-99P" secondAttribute="bottom" constant="-2" id="FoQ-Ma-IpV"/>
-                            <constraint firstItem="oFy-ha-99P" firstAttribute="top" secondItem="cVk-8g-8XK" secondAttribute="bottom" id="MvK-H0-tDX"/>
-                            <constraint firstItem="ZZy-8T-vSM" firstAttribute="centerX" secondItem="WJf-GV-mKe" secondAttribute="centerX" id="Qsl-3B-3aQ"/>
-                            <constraint firstItem="gW4-HE-tIU" firstAttribute="top" secondItem="bYd-49-CQr" secondAttribute="bottom" constant="10" id="RIx-hy-K6T"/>
-                            <constraint firstItem="38N-RU-I7V" firstAttribute="centerX" secondItem="WJf-GV-mKe" secondAttribute="centerX" id="Raf-FM-T2w"/>
-                            <constraint firstItem="WJf-GV-mKe" firstAttribute="top" secondItem="eYh-8V-mzW" secondAttribute="topMargin" id="TBE-Al-vKt"/>
-                            <constraint firstItem="Meo-a7-CLV" firstAttribute="top" secondItem="bYd-49-CQr" secondAttribute="bottom" constant="20" id="Tvi-3r-qV1"/>
-                            <constraint firstItem="0sD-iy-Mfj" firstAttribute="width" secondItem="ZZy-8T-vSM" secondAttribute="width" id="UPj-lC-WUL"/>
-                            <constraint firstItem="QDC-2b-WL1" firstAttribute="width" secondItem="ZZy-8T-vSM" secondAttribute="width" id="W3z-lC-yhd"/>
-                            <constraint firstItem="ZZy-8T-vSM" firstAttribute="top" secondItem="Meo-a7-CLV" secondAttribute="bottom" constant="15" id="Wow-GJ-eP6"/>
-                            <constraint firstItem="cVk-8g-8XK" firstAttribute="width" secondItem="ZZy-8T-vSM" secondAttribute="width" id="YiE-Jv-5Wp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="WJf-GV-mKe" secondAttribute="trailing" constant="-20" id="cju-h9-frJ"/>
-                            <constraint firstItem="Meo-a7-CLV" firstAttribute="centerX" secondItem="WJf-GV-mKe" secondAttribute="centerX" id="drY-l4-7i5"/>
-                            <constraint firstItem="bRH-HE-1X4" firstAttribute="top" secondItem="WJf-GV-mKe" secondAttribute="bottom" id="ldf-Q7-Sjv"/>
-                            <constraint firstItem="oFy-ha-99P" firstAttribute="width" secondItem="ZZy-8T-vSM" secondAttribute="width" id="pgh-Tz-zlk"/>
-                            <constraint firstItem="WJf-GV-mKe" firstAttribute="leading" secondItem="eYh-8V-mzW" secondAttribute="leadingMargin" constant="-20" id="snc-j5-dJh"/>
-                            <constraint firstItem="0sD-iy-Mfj" firstAttribute="centerX" secondItem="WJf-GV-mKe" secondAttribute="centerX" id="wYX-S1-nzz"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tmw-Pm-jAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1759" y="612"/>
-        </scene>
         <!--About-->
         <scene sceneID="PDb-gc-VUi">
             <objects>
@@ -539,6 +400,7 @@ Opponent Modelling</string>
                                         </constraints>
                                         <state key="normal" backgroundImage="Sekhmet"/>
                                         <connections>
+                                            <action selector="test1:" destination="Fut-U1-5mI" eventType="touchDragExit" id="FoZ-lw-Nhx"/>
                                             <segue destination="iKM-9D-HcM" kind="showDetail" identifier="chooseSekhmet" action="showViewController:sender:" id="dQy-o4-105"/>
                                         </connections>
                                     </button>
@@ -554,6 +416,7 @@ Opponent Modelling</string>
                                             </mask>
                                         </variation>
                                         <connections>
+                                            <action selector="test2:" destination="Fut-U1-5mI" eventType="touchDragExit" id="jjy-Kx-36e"/>
                                             <segue destination="iKM-9D-HcM" kind="showDetail" identifier="chooseHorus" action="showViewController:sender:" id="tWo-5V-xZh"/>
                                         </connections>
                                     </button>
@@ -645,6 +508,10 @@ Difficulty: Normal</string>
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <segue destination="sOp-hC-Ley" kind="showDetail" identifier="easterLose" id="zi4-oz-hbP"/>
+                        <segue destination="fpq-6J-MAz" kind="showDetail" identifier="easterWin" id="Xi5-LD-xHx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AFu-UQ-ebI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1323,10 +1190,10 @@ Difficulty: Normal</string>
             </objects>
             <point key="canvasLocation" x="1592" y="-166"/>
         </scene>
-        <!--Result View Controller-->
+        <!--Tie Screen-->
         <scene sceneID="6xz-fb-Jfi">
             <objects>
-                <viewController id="sek-Gi-qVI" customClass="ResultViewController" customModule="Pyramid_Game" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Tie Screen" id="sek-Gi-qVI" customClass="ResultViewController" customModule="Pyramid_Game" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AS2-nW-FSM"/>
                         <viewControllerLayoutGuide type="bottom" id="T2R-XO-hUb"/>
@@ -1651,7 +1518,9 @@ Difficulty: Normal</string>
         <image name="tutorialText1" width="572" height="201"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="OWO-9E-dmK"/>
+        <segue reference="zi4-oz-hbP"/>
+        <segue reference="Xi5-LD-xHx"/>
         <segue reference="dQy-o4-105"/>
-        <segue reference="Oni-pd-G9N"/>
     </inferredMetricsTieBreakers>
 </document>
