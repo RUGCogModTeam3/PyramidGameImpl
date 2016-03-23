@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CF61BDB71C8D9F8E00CBA055"
-            BuildableName = "PyramidGameImpl.app"
-            BlueprintName = "PyramidGameImpl"
-            ReferencedContainer = "container:PyramidGameImpl.xcodeproj">
+            BuildableName = "Pyramid Game.app"
+            BlueprintName = "Pyramid Game"
+            ReferencedContainer = "container:Pyramid Game.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CF61BDB71C8D9F8E00CBA055"
-            BuildableName = "PyramidGameImpl.app"
-            BlueprintName = "PyramidGameImpl"
-            ReferencedContainer = "container:PyramidGameImpl.xcodeproj">
+            BuildableName = "Pyramid Game.app"
+            BlueprintName = "Pyramid Game"
+            ReferencedContainer = "container:Pyramid Game.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
