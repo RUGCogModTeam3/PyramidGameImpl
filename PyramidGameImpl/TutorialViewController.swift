@@ -9,6 +9,8 @@
 import UIKit
 
 class TutorialViewController: UIViewController {
+    @IBOutlet weak var leftButton: UIButton!
+    @IBOutlet weak var rightButton: UIButton!
 
     @IBOutlet weak var tutorialScreenshot: UIImageView! {
         didSet { setImages() }
@@ -21,23 +23,24 @@ class TutorialViewController: UIViewController {
     var currNdx = 0 {
         didSet {
             if currNdx < 0 || currNdx >= imageSequence.count {
-                currNdx = min(max(0, currNdx), imageSequence.count-1)
-            } else {
-                setImages()
+                //currNdx = min(max(0, currNdx), imageSequence.count-1)
+                currNdx = (currNdx + imageSequence.count) % imageSequence.count
             }
+            setImages()
         }
     }
     
     func setImages() {
         let suffix = imageSequence[currNdx]
         tutorialText?.image = UIImage(named: "tutorialText\(suffix)")
-        tutorialScreenshot?.image = UIImage(named: "tutorialSS\(suffix)")
+        UIView.transitionWithView(tutorialScreenshot, duration: 0.25, options: .TransitionCrossDissolve, animations: { self.tutorialScreenshot.image = UIImage(named: "tutorialSS\(suffix)") }, completion: nil)
+        //leftButton?.hidden = currNdx == 0
+        //rightButton?.hidden = currNdx == imageSequence.count-1
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setImages()
     }
     
     @IBAction func advance() {
