@@ -4,7 +4,7 @@ import Foundation
 class SekhmetAI: Model, PyramidAI {
     var cardCount = [Int](count:13, repeatedValue: 0)
     let game: PyramidGame
-    var bluffProbabilities = [10,30,30,65,55]
+    var bluffProbabilities = [10,90,30,30,65,55]
     var callBluffProbabilities = [10,70,60,65,60,35,50]
     var didLastBluff = false
     
@@ -141,24 +141,28 @@ class SekhmetAI: Model, PyramidAI {
             let play = makeChoice(probabilities[0])
             return play
         }
+        if((self.game.players[.Left]!.score-self.game.players[.Right]!.score>self.game.pyramid.remainingBluffPointsAfterStep())){
+            let play = makeChoice(probabilities[1])
+            return play
+        }
         
         if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
             if countChunk.slotTextValue("counts")! == "high" {
-                let play = makeChoice(probabilities[1]+bias)
+                let play = makeChoice(probabilities[2]+bias)
                 return play
             }
         }
         
         if let bluffChunk = self.retrieve(["isa":"playercalledbluff"]) {
             if bluffChunk.slotTextValue("called")! == "true" {
-                let play = makeChoice(probabilities[2]+bias)
+                let play = makeChoice(probabilities[3]+bias)
                 return play
             } else {
-                let play = makeChoice(probabilities[3]+bias)
+                let play = makeChoice(probabilities[4]+bias)
                 return play
             }
         } else {
-            let play = makeChoice(probabilities[4]+bias)
+            let play = makeChoice(probabilities[5]+bias)
             return play
         }
     }
@@ -276,6 +280,16 @@ extension Pyramid {
         }
         for (var offset = 1; rows-offset > currRow; offset++) {
             points += (rows-offset+1)*offset
+        }
+        return points
+    }
+    func remainingBluffPointsAfterStep()->Int {
+        var points = 0
+        for (var col = currCol+1; isValidNdx(currRow, col); col++) {
+            points += (currRow+1)*2
+        }
+        for (var offset = 1; rows-offset > currRow; offset++) {
+            points += ((rows-offset+1)*offset)*2
         }
         return points
     }

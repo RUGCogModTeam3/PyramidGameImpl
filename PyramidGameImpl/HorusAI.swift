@@ -5,7 +5,7 @@ class HorusAI: SekhmetAI {
     override init(game: PyramidGame) {
         super.init(game: game)
         self.dm.baseLevelDecay = 0.5
-        self.bluffProbabilities = [0,20,20,55,40]
+        self.bluffProbabilities = [0,100,20,20,55,40]
         self.callBluffProbabilities = [0,75,60,65,60,30,50]
     }
     
