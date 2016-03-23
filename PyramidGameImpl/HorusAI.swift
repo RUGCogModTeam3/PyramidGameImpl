@@ -5,7 +5,7 @@ class HorusAI: SekhmetAI {
     override init(game: PyramidGame) {
         super.init(game: game)
         self.dm.baseLevelDecay = 0.5
-        self.bluffProbabilities = [0,25,25,65,50]
+        self.bluffProbabilities = [0,20,20,55,40]
         self.callBluffProbabilities = [0,75,60,65,60,30,50]
     }
     
@@ -15,6 +15,21 @@ class HorusAI: SekhmetAI {
     
     override func iconName()->String {
         return "HorusFace"
+    }
+    
+    override func observeState(state:UIState) {
+        self.time += 5
+        switch state {
+        case .HumanYesNo:
+            for i in 0..<4 {
+                rehearse(i)
+            }
+        case .ModelSelect:
+            for i in 0..<4 {
+                rehearse(i)
+            }
+        default: break
+        }
     }
     
     
