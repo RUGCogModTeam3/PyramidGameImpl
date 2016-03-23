@@ -363,7 +363,7 @@ Card face art</string>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="External Assets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7e0-yp-9Ay">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -425,7 +425,7 @@ Thomas Derksen</string>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Team" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCE-yO-G8c">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xgg-uw-Vx2">
@@ -460,9 +460,9 @@ Opponent Modelling</string>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="7Tb-6M-upJ"/>
                                         <exclude reference="3ST-gY-bCl"/>
                                         <exclude reference="AnX-hJ-Wud"/>
+                                        <exclude reference="7Tb-6M-upJ"/>
                                         <exclude reference="4I6-RQ-xyR"/>
                                         <exclude reference="EDs-IT-gT9"/>
                                     </mask>
@@ -1647,7 +1647,7 @@ Difficulty: Normal</string>
         <image name="logowin" width="560" height="471"/>
         <image name="slingergoed" width="770" height="615"/>
         <image name="trophy" width="256" height="256"/>
-        <image name="tutorialSS1" width="768" height="1024"/>
+        <image name="tutorialSS1" width="1551" height="2068"/>
         <image name="tutorialText1" width="572" height="201"/>
     </resources>
     <inferredMetricsTieBreakers>

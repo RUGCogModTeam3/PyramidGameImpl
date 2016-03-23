@@ -41,6 +41,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="desertSand" translatesAutoresizingMaskIntoConstraints="NO" id="Rjk-U3-Vdo">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logomain" translatesAutoresizingMaskIntoConstraints="NO" id="bbq-8C-7aF" userLabel="Logo">
+                                <rect key="frame" x="200" y="174" width="200" height="253"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Gcb-u3-eRE"/>
+                                    <constraint firstAttribute="width" secondItem="bbq-8C-7aF" secondAttribute="height" multiplier="19:24" id="H4Z-o7-ccF"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -52,8 +59,11 @@
                             <constraint firstItem="cMk-Ic-gI4" firstAttribute="centerX" secondItem="Rjk-U3-Vdo" secondAttribute="centerX" id="RfN-dV-XpO"/>
                             <constraint firstItem="T8C-pk-0pm" firstAttribute="top" secondItem="mOI-7Y-9WK" secondAttribute="bottom" id="T20-pl-eii"/>
                             <constraint firstItem="Rjk-U3-Vdo" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-20" id="XrC-Ha-OrN"/>
+                            <constraint firstItem="bbq-8C-7aF" firstAttribute="centerY" secondItem="Rjk-U3-Vdo" secondAttribute="centerY" id="eAY-kG-Gzf"/>
+                            <constraint firstItem="bbq-8C-7aF" firstAttribute="width" secondItem="bbq-8C-7aF" secondAttribute="height" multiplier="19:24" id="grP-fN-RwP"/>
                             <constraint firstItem="T8C-pk-0pm" firstAttribute="centerX" secondItem="Rjk-U3-Vdo" secondAttribute="centerX" id="o7b-aR-jX8"/>
                             <constraint firstItem="cMk-Ic-gI4" firstAttribute="top" secondItem="T8C-pk-0pm" secondAttribute="bottom" id="ovb-Vy-KgZ"/>
+                            <constraint firstItem="bbq-8C-7aF" firstAttribute="centerX" secondItem="Rjk-U3-Vdo" secondAttribute="centerX" id="qcY-xR-Fay"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -64,6 +74,7 @@
     </scenes>
     <resources>
         <image name="desertSand" width="2415" height="814"/>
+        <image name="logomain" width="380" height="480"/>
         <image name="trophy" width="256" height="256"/>
     </resources>
 </document>
