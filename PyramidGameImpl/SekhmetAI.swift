@@ -115,11 +115,7 @@ class SekhmetAI: Model, PyramidAI {
         let rank = "\(lastRevealedCard.rank)"
         let bias = self.game.players[.Left]!.score-self.game.players[.Right]!.score
         didLastBluff = true
-        
-        if ((self.game.players[.Right]!.score-self.game.players[.Left]!.score)>self.game.pyramid.remainingNonBluffPoints()) {
-            let play = makeChoice(probabilities[0])
-            return play
-        }
+
         if let cardChunk = self.retrieve(["isa":"modelcard","rank":rank]) {
             let color = cardChunk.slotTextValue("color")!
             print("I've retrieved color: \(color), rank: \(rank) ")
@@ -140,12 +136,19 @@ class SekhmetAI: Model, PyramidAI {
                 return play
             }
         }
+        
+        if ((self.game.players[.Right]!.score-self.game.players[.Left]!.score)>self.game.pyramid.remainingNonBluffPoints()) {
+            let play = makeChoice(probabilities[0])
+            return play
+        }
+        
         if let countChunk = self.retrieve(["isa":"cardcount","cardrank":rank]) {
             if countChunk.slotTextValue("counts")! == "high" {
                 let play = makeChoice(probabilities[1]+bias)
                 return play
             }
         }
+        
         if let bluffChunk = self.retrieve(["isa":"playercalledbluff"]) {
             if bluffChunk.slotTextValue("called")! == "true" {
                 let play = makeChoice(probabilities[2]+bias)
