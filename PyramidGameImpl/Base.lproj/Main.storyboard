@@ -400,7 +400,6 @@ Opponent Modelling</string>
                                         </constraints>
                                         <state key="normal" backgroundImage="Sekhmet"/>
                                         <connections>
-                                            <action selector="test1:" destination="Fut-U1-5mI" eventType="touchDragExit" id="FoZ-lw-Nhx"/>
                                             <segue destination="iKM-9D-HcM" kind="showDetail" identifier="chooseSekhmet" action="showViewController:sender:" id="dQy-o4-105"/>
                                         </connections>
                                     </button>
@@ -416,7 +415,6 @@ Opponent Modelling</string>
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="test2:" destination="Fut-U1-5mI" eventType="touchDragExit" id="jjy-Kx-36e"/>
                                             <segue destination="iKM-9D-HcM" kind="showDetail" identifier="chooseHorus" action="showViewController:sender:" id="tWo-5V-xZh"/>
                                         </connections>
                                     </button>
@@ -508,10 +506,6 @@ Difficulty: Normal</string>
                             </mask>
                         </variation>
                     </view>
-                    <connections>
-                        <segue destination="sOp-hC-Ley" kind="showDetail" identifier="easterLose" id="zi4-oz-hbP"/>
-                        <segue destination="fpq-6J-MAz" kind="showDetail" identifier="easterWin" id="Xi5-LD-xHx"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AFu-UQ-ebI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1180,10 +1174,10 @@ Difficulty: Normal</string>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="Uu1-TU-s0V"/>
                                 <exclude reference="D5s-oB-iZG"/>
                                 <exclude reference="Dg7-27-Y6f"/>
                                 <exclude reference="xbJ-oU-06Q"/>
+                                <exclude reference="Uu1-TU-s0V"/>
                             </mask>
                         </variation>
                     </view>
@@ -1375,11 +1369,11 @@ Difficulty: Normal</string>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="3Tw-pP-ehs"/>
-                                <exclude reference="KQR-yp-Vya"/>
                                 <exclude reference="sQE-Dw-7IH"/>
                                 <exclude reference="88b-zd-ZLa"/>
                                 <exclude reference="Bz2-V1-O1a"/>
+                                <exclude reference="3Tw-pP-ehs"/>
+                                <exclude reference="KQR-yp-Vya"/>
                             </mask>
                         </variation>
                     </view>
@@ -1540,9 +1534,7 @@ Difficulty: Normal</string>
         <image name="tutorialText1" width="572" height="201"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ori-10-Re3"/>
         <segue reference="dQy-o4-105"/>
-        <segue reference="rmn-Ot-goV"/>
-        <segue reference="sLu-zJ-ufG"/>
+        <segue reference="OWO-9E-dmK"/>
     </inferredMetricsTieBreakers>
 </document>
