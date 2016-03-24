@@ -243,21 +243,30 @@ class SekhmetAI: Model, PyramidAI {
         return "SekhmetFace"
     }
     
+    func plural(count:Int, _ base:String)->String {
+        return "\(count) \(base)\(count==1 ? "" : "s")"
+    }
+    
+    func aOrAn(str:String)->String {
+        let c = str[str.startIndex]
+        return "a\(c=="a" || c == "8" ? "n" : "") \(str)"
+    }
+    
     func textInitRemember()->String { return "Welcome mortal! Remember your cards well..." }
-    func textPlayerDoYouHaveA(cardName:String)->String { return "Well, human, do you have a \(cardName)?" }
+    func textPlayerDoYouHaveA(cardName:String)->String { return "Well, human, do you have \(aOrAn(cardName))?" }
     func textPlayerSelectCard()->String { return "Select your card, mortal." }
     func textPlayerCallBase()->String { return "Show me your card! I believe you are bluffing..." }
-    func textPlayerCallCorrect(points:Int)->String { return "I was right! I get \(points) points." }
-    func textPlayerCallIncorrect(points:Int)->String { return "But you were telling the truth! You get \(points) points." }
-    func textPlayerNoCall(points:Int)->String { return "I trust you are not bluffing... for now. You get \(points) points." }
+    func textPlayerCallCorrect(points:Int)->String { return "I was right! I get \(plural(points,"point"))." }
+    func textPlayerCallIncorrect(points:Int)->String { return "But you were telling the truth! You get \(plural(points,"point"))." }
+    func textPlayerNoCall(points:Int)->String { return "I trust you are not bluffing... for now. You get \(plural(points,"point"))." }
     func textPlayerNewCard()->String { return "This is your new card, mortal. Remember it well." }
-    func textAIPass(cardName:String)->String { return "It is now my turn... but I don't have a \(cardName)." }
-    func textAIPlay(cardName:String)->String { return "It is now my turn! I do have a \(cardName).\n\nDo you think I am bluffing?" }
+    func textAIPass(cardName:String)->String { return "It is now my turn... but I don't have \(aOrAn(cardName))." }
+    func textAIPlay(cardName:String)->String { return "It is now my turn! I do have \(aOrAn(cardName)).\n\nDo you think I am bluffing?" }
     func textAICallCorrect(points:Int)->String { return didLastBluff ? textAICallCorrectBluff(points) : textAICallCorrectMistake(points)}
-    func textAICallCorrectBluff(points:Int)->String { return "No, you caught me in my lie! You get \(points) points." }
-    func textAICallCorrectMistake(points:Int)->String { return "What? I thought I had that card... You get \(points) points." }
-    func textAICallIncorrect(points:Int)->String { return "Ha! I was telling the truth! I get \(points) points." }
-    func textAINoCall(points:Int)->String { return "Very well, mortal. I get \(points) points." }
+    func textAICallCorrectBluff(points:Int)->String { return "No, you caught me in my lie! You get \(plural(points,"point"))." }
+    func textAICallCorrectMistake(points:Int)->String { return "What? I thought I had that card... You get \(plural(points,"point"))." }
+    func textAICallIncorrect(points:Int)->String { return "Ha! I was telling the truth! I get \(plural(points,"point"))." }
+    func textAINoCall(points:Int)->String { return "Very well, mortal. I get \(plural(points,"point"))." }
     func textAINewCard()->String { return "Now I get a new card." }
 }
 
